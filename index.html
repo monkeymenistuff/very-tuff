@@ -1,189 +1,200 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Very Tuff Profiles</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Very Tuff</title>
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
+  <style>
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial,Helvetica,sans-serif;
+    }
 
-body{
-  font-family:Arial,Helvetica,sans-serif;
-  background:linear-gradient(180deg,#0f172a,#111827);
-  color:white;
-  padding:25px;
-}
+    body{
+      background:#0f172a;
+      color:white;
+      padding:25px;
+    }
 
-h1{
-  text-align:center;
-  font-size:38px;
-  margin-bottom:5px;
-}
+    h1{
+      text-align:center;
+      font-size:42px;
+      margin-bottom:8px;
+    }
 
-.subtitle{
-  text-align:center;
-  color:#94a3b8;
-  margin-bottom:30px;
-}
+    .sub{
+      text-align:center;
+      color:#94a3b8;
+      margin-bottom:25px;
+    }
 
-.container{
-  max-width:800px;
-  margin:auto;
-}
+    .container{
+      max-width:800px;
+      margin:auto;
+    }
 
-.form{
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:18px;
-  padding:22px;
-  margin-bottom:30px;
-}
+    .form{
+      background:#1e293b;
+      border-radius:18px;
+      padding:20px;
+      margin-bottom:25px;
+    }
 
-.form h2{
-  margin-bottom:15px;
-}
+    input,textarea{
+      width:100%;
+      padding:12px;
+      margin:8px 0;
+      border:none;
+      border-radius:10px;
+      background:#334155;
+      color:white;
+      font-size:15px;
+    }
 
-input,textarea{
-  width:100%;
-  margin:8px 0;
-  padding:12px;
-  border:none;
-  border-radius:10px;
-  background:#334155;
-  color:white;
-  font-size:15px;
-}
+    textarea{
+      height:90px;
+      resize:none;
+    }
 
-textarea{
-  resize:none;
-  height:80px;
-}
+    .row{
+      display:flex;
+      gap:10px;
+    }
 
-.row{
-  display:flex;
-  gap:10px;
-}
+    button{
+      width:100%;
+      padding:13px;
+      margin-top:10px;
+      border:none;
+      border-radius:10px;
+      background:#2563eb;
+      color:white;
+      font-size:16px;
+      cursor:pointer;
+      font-weight:bold;
+    }
 
-button{
-  width:100%;
-  margin-top:10px;
-  padding:14px;
-  border:none;
-  border-radius:10px;
-  background:#2563eb;
-  color:white;
-  font-size:16px;
-  cursor:pointer;
-  font-weight:bold;
-}
+    button:hover{
+      background:#1d4ed8;
+    }
 
-button:hover{
-  background:#1d4ed8;
-}
+    .card{
+      background:#1e293b;
+      border-radius:18px;
+      padding:18px;
+      margin-bottom:16px;
+    }
 
-.card{
-  background:#1e293b;
-  border:1px solid #334155;
-  border-radius:18px;
-  padding:18px;
-  margin-bottom:18px;
-}
+    .top{
+      display:flex;
+      align-items:center;
+      gap:15px;
+    }
 
-.top{
-  display:flex;
-  align-items:center;
-  gap:15px;
-}
+    .avatar{
+      width:70px;
+      height:70px;
+      border-radius:50%;
+      background:#2563eb;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:28px;
+      font-weight:bold;
+    }
 
-.avatar{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:#2563eb;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:30px;
-  font-weight:bold;
-}
+    .name{
+      font-size:24px;
+      font-weight:bold;
+    }
 
-.name{
-  font-size:25px;
-  font-weight:bold;
-}
+    .age{
+      color:#94a3b8;
+      margin-top:3px;
+    }
 
-.age{
-  color:#94a3b8;
-}
+    .bio{
+      margin:15px 0;
+      line-height:1.5;
+    }
 
-.bio{
-  margin:15px 0;
-  line-height:1.5;
-}
+    .tags{
+      margin-top:8px;
+    }
 
-.tags span{
-  display:inline-block;
-  background:#334155;
-  padding:8px 14px;
-  border-radius:20px;
-  margin:4px;
-  font-size:14px;
-}
+    .tags span{
+      display:inline-block;
+      background:#334155;
+      padding:7px 12px;
+      border-radius:20px;
+      margin:4px;
+    }
 
-.emoji{
-  font-size:28px;
-  margin-top:10px;
-}
+    .emoji{
+      font-size:28px;
+      margin-top:12px;
+    }
 
-footer{
-  text-align:center;
-  color:#64748b;
-  margin-top:30px;
-}
-</style>
+    .delete{
+      background:#dc2626;
+      margin-top:15px;
+    }
+
+    .delete:hover{
+      background:#b91c1c;
+    }
+  </style>
 </head>
-
 <body>
 
 <div class="container">
 
 <h1>🔥 VERY TUFF</h1>
-<p class="subtitle">Make your profile • Meet the community</p>
+<p class="sub">Create your profile and join the community.</p>
 
 <div class="form">
-<h2>Create Your Profile</h2>
+  <h2>Create Profile</h2>
 
-<input id="name" placeholder="Name">
+  <input id="name" placeholder="Your name">
 
-<div class="row">
-<input id="age" type="number" placeholder="Age">
-<input id="emoji" placeholder="Favorite Emoji 😎">
-</div>
+  <div class="row">
+    <input id="age" type="number" placeholder="Age">
+    <input id="emoji" placeholder="Emoji 😎">
+  </div>
 
-<div class="row">
-<input id="word1" placeholder="Word 1">
-<input id="word2" placeholder="Word 2">
-<input id="word3" placeholder="Word 3">
-</div>
+  <div class="row">
+    <input id="word1" placeholder="Word 1">
+    <input id="word2" placeholder="Word 2">
+    <input id="word3" placeholder="Word 3">
+  </div>
 
-<textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
+  <textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
 
-<button id="createBtn">Create Profile</button>
+  <button id="createBtn">Create Profile</button>
 </div>
 
 <div id="profiles"></div>
-
-<footer>Very Tuff © 2026</footer>
 
 </div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_API_KEY",
+  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
   authDomain: "tuffmonkey-f75b3.firebaseapp.com",
   projectId: "tuffmonkey-f75b3",
   storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
@@ -194,71 +205,81 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const profiles = document.getElementById("profiles");
+const profilesDiv = document.getElementById("profiles");
 
 document.getElementById("createBtn").onclick = async () => {
 
-const name=document.getElementById("name").value.trim();
-const age=document.getElementById("age").value;
-const emoji=document.getElementById("emoji").value.trim();
-const word1=document.getElementById("word1").value.trim();
-const word2=document.getElementById("word2").value.trim();
-const word3=document.getElementById("word3").value.trim();
-const bio=document.getElementById("bio").value.trim();
+  const name = document.getElementById("name").value.trim();
+  const age = Number(document.getElementById("age").value);
+  const emoji = document.getElementById("emoji").value.trim();
+  const word1 = document.getElementById("word1").value.trim();
+  const word2 = document.getElementById("word2").value.trim();
+  const word3 = document.getElementById("word3").value.trim();
+  const bio = document.getElementById("bio").value.trim();
 
-if(!name||!age||!word1||!word2||!word3||!bio){
-alert("Fill in every box!");
-return;
-}
+  if(!name || !age || !word1 || !word2 || !word3 || !bio){
+    alert("Fill in every box!");
+    return;
+  }
 
-await addDoc(collection(db,"profiles"),{
-name,
-age,
-emoji,
-word1,
-word2,
-word3,
-bio,
-time:Date.now()
-});
+  await addDoc(collection(db,"profiles"),{
+    name,
+    age,
+    emoji,
+    word1,
+    word2,
+    word3,
+    bio,
+    time:Date.now()
+  });
 
-document.querySelectorAll("input,textarea").forEach(i=>i.value="");
+  document.querySelectorAll("input, textarea").forEach(el => el.value = "");
 };
 
-const q=query(collection(db,"profiles"),orderBy("time","desc"));
+window.deleteProfile = async (id) => {
+  if(confirm("Delete this profile?")){
+    await deleteDoc(doc(db,"profiles",id));
+  }
+};
+
+const q = query(collection(db,"profiles"),orderBy("time","desc"));
 
 onSnapshot(q,(snapshot)=>{
-profiles.innerHTML="";
+  profilesDiv.innerHTML="";
 
-snapshot.forEach((doc)=>{
+  snapshot.forEach((profile)=>{
 
-const d=doc.data();
+    const d = profile.data();
 
-profiles.innerHTML+=`
-<div class="card">
+    profilesDiv.innerHTML += `
+      <div class="card">
 
-<div class="top">
-<div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
+        <div class="top">
+          <div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
 
-<div>
-<div class="name">${d.name}</div>
-<div class="age">${d.age} years old</div>
-</div>
-</div>
+          <div>
+            <div class="name">${d.name}</div>
+            <div class="age">${d.age} years old</div>
+          </div>
+        </div>
 
-<p class="bio">${d.bio}</p>
+        <div class="bio">${d.bio}</div>
 
-<div class="tags">
-<span>${d.word1}</span>
-<span>${d.word2}</span>
-<span>${d.word3}</span>
-</div>
+        <div class="tags">
+          <span>${d.word1}</span>
+          <span>${d.word2}</span>
+          <span>${d.word3}</span>
+        </div>
 
-<div class="emoji">${d.emoji}</div>
+        <div class="emoji">${d.emoji || "🙂"}</div>
 
-</div>
-`;
-});
+        <button class="delete" onclick="deleteProfile('${profile.id}')">
+          🗑 Delete Profile
+        </button>
+
+      </div>
+    `;
+  });
 });
 </script>
 
