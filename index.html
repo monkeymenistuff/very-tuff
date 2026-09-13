@@ -1,0 +1,123 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Very Tuff - Live Messages</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #111827;
+      color: white;
+      max-width: 700px;
+      margin: 40px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      width: 70%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 12px 18px;
+      border: none;
+      border-radius: 8px;
+      background: #2563eb;
+      color: white;
+      cursor: pointer;
+      font-size: 16px;
+    }
+
+    button:hover {
+      background: #1d4ed8;
+    }
+
+    #messages {
+      margin-top: 25px;
+    }
+
+    .msg {
+      background: #1f2937;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>🔥 Very Tuff Live Feed</h1>
+
+  <input id="message" placeholder="Type something...">
+  <button id="submitBtn">Submit</button>
+
+  <div id="messages"></div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+    import {
+      getFirestore,
+      collection,
+      addDoc,
+      query,
+      orderBy,
+      onSnapshot
+    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+      authDomain: "tuffmonkey-f75b3.firebaseapp.com",
+      projectId: "tuffmonkey-f75b3",
+      storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
+      messagingSenderId: "897150250440",
+      appId: "1:897150250440:web:8a668c17d28074fad264fd"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const input = document.getElementById("message");
+    const button = document.getElementById("submitBtn");
+    const messages = document.getElementById("messages");
+
+    button.addEventListener("click", async () => {
+      const text = input.value.trim();
+      if (!text) return;
+
+      await addDoc(collection(db, "messages"), {
+        text,
+        time: Date.now()
+      });
+
+      input.value = "";
+    });
+
+    const q = query(collection(db, "messages"), orderBy("time", "desc"));
+
+    onSnapshot(q, (snapshot) => {
+      messages.innerHTML = "";
+
+      snapshot.forEach((doc) => {
+        const data = doc.data();
+
+        const div = document.createElement("div");
+        div.className = "msg";
+        div.textContent = data.text;
+
+        messages.appendChild(div);
+      });
+    });
+  </script>
+
+</body>
+</html>
