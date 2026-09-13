@@ -1,105 +1,189 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Very Tuff Profiles</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Very Tuff Profiles</title>
 
-  <style>
-    body{
-      margin:0;
-      font-family:Arial,sans-serif;
-      background:#0f172a;
-      color:white;
-      padding:30px;
-    }
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
 
-    h1{ text-align:center; }
+body{
+  font-family:Arial,Helvetica,sans-serif;
+  background:linear-gradient(180deg,#0f172a,#111827);
+  color:white;
+  padding:25px;
+}
 
-    .box{
-      max-width:700px;
-      margin:auto;
-      background:#1e293b;
-      padding:20px;
-      border-radius:15px;
-    }
+h1{
+  text-align:center;
+  font-size:38px;
+  margin-bottom:5px;
+}
 
-    input{
-      width:100%;
-      padding:12px;
-      margin:8px 0;
-      border:none;
-      border-radius:8px;
-      font-size:15px;
-    }
+.subtitle{
+  text-align:center;
+  color:#94a3b8;
+  margin-bottom:30px;
+}
 
-    button{
-      width:100%;
-      padding:13px;
-      background:#2563eb;
-      color:white;
-      border:none;
-      border-radius:8px;
-      font-size:16px;
-      cursor:pointer;
-      margin-top:10px;
-    }
+.container{
+  max-width:800px;
+  margin:auto;
+}
 
-    .profiles{
-      max-width:700px;
-      margin:25px auto;
-    }
+.form{
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:18px;
+  padding:22px;
+  margin-bottom:30px;
+}
 
-    .card{
-      background:#1e293b;
-      padding:18px;
-      border-radius:12px;
-      margin-bottom:12px;
-    }
+.form h2{
+  margin-bottom:15px;
+}
 
-    .name{
-      font-size:22px;
-      font-weight:bold;
-      margin-bottom:10px;
-    }
+input,textarea{
+  width:100%;
+  margin:8px 0;
+  padding:12px;
+  border:none;
+  border-radius:10px;
+  background:#334155;
+  color:white;
+  font-size:15px;
+}
 
-    .tags span{
-      display:inline-block;
-      background:#334155;
-      padding:7px 12px;
-      border-radius:20px;
-      margin:4px;
-    }
-  </style>
+textarea{
+  resize:none;
+  height:80px;
+}
+
+.row{
+  display:flex;
+  gap:10px;
+}
+
+button{
+  width:100%;
+  margin-top:10px;
+  padding:14px;
+  border:none;
+  border-radius:10px;
+  background:#2563eb;
+  color:white;
+  font-size:16px;
+  cursor:pointer;
+  font-weight:bold;
+}
+
+button:hover{
+  background:#1d4ed8;
+}
+
+.card{
+  background:#1e293b;
+  border:1px solid #334155;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:18px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  gap:15px;
+}
+
+.avatar{
+  width:70px;
+  height:70px;
+  border-radius:50%;
+  background:#2563eb;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:30px;
+  font-weight:bold;
+}
+
+.name{
+  font-size:25px;
+  font-weight:bold;
+}
+
+.age{
+  color:#94a3b8;
+}
+
+.bio{
+  margin:15px 0;
+  line-height:1.5;
+}
+
+.tags span{
+  display:inline-block;
+  background:#334155;
+  padding:8px 14px;
+  border-radius:20px;
+  margin:4px;
+  font-size:14px;
+}
+
+.emoji{
+  font-size:28px;
+  margin-top:10px;
+}
+
+footer{
+  text-align:center;
+  color:#64748b;
+  margin-top:30px;
+}
+</style>
 </head>
+
 <body>
 
-<h1>🔥 Very Tuff Profiles</h1>
+<div class="container">
 
-<div class="box">
-  <input id="name" placeholder="Your name">
-  <input id="word1" placeholder="Word 1">
-  <input id="word2" placeholder="Word 2">
-  <input id="word3" placeholder="Word 3">
+<h1>🔥 VERY TUFF</h1>
+<p class="subtitle">Make your profile • Meet the community</p>
 
-  <button id="createBtn">Create Profile</button>
+<div class="form">
+<h2>Create Your Profile</h2>
+
+<input id="name" placeholder="Name">
+
+<div class="row">
+<input id="age" type="number" placeholder="Age">
+<input id="emoji" placeholder="Favorite Emoji 😎">
 </div>
 
-<div class="profiles" id="profiles"></div>
+<div class="row">
+<input id="word1" placeholder="Word 1">
+<input id="word2" placeholder="Word 2">
+<input id="word3" placeholder="Word 3">
+</div>
+
+<textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
+
+<button id="createBtn">Create Profile</button>
+</div>
+
+<div id="profiles"></div>
+
+<footer>Very Tuff © 2026</footer>
+
+</div>
 
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  onSnapshot,
-  query,
-  orderBy
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+  apiKey: "YOUR_API_KEY",
   authDomain: "tuffmonkey-f75b3.firebaseapp.com",
   projectId: "tuffmonkey-f75b3",
   storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
@@ -110,52 +194,71 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-const profilesDiv = document.getElementById("profiles");
+const profiles = document.getElementById("profiles");
 
 document.getElementById("createBtn").onclick = async () => {
-  const name = document.getElementById("name").value.trim();
-  const w1 = document.getElementById("word1").value.trim();
-  const w2 = document.getElementById("word2").value.trim();
-  const w3 = document.getElementById("word3").value.trim();
 
-  if(!name || !w1 || !w2 || !w3){
-    alert("Fill in everything!");
-    return;
-  }
+const name=document.getElementById("name").value.trim();
+const age=document.getElementById("age").value;
+const emoji=document.getElementById("emoji").value.trim();
+const word1=document.getElementById("word1").value.trim();
+const word2=document.getElementById("word2").value.trim();
+const word3=document.getElementById("word3").value.trim();
+const bio=document.getElementById("bio").value.trim();
 
-  await addDoc(collection(db,"profiles"),{
-    name,
-    word1:w1,
-    word2:w2,
-    word3:w3,
-    time:Date.now()
-  });
+if(!name||!age||!word1||!word2||!word3||!bio){
+alert("Fill in every box!");
+return;
+}
 
-  name.value="";
-  word1.value="";
-  word2.value="";
-  word3.value="";
+await addDoc(collection(db,"profiles"),{
+name,
+age,
+emoji,
+word1,
+word2,
+word3,
+bio,
+time:Date.now()
+});
+
+document.querySelectorAll("input,textarea").forEach(i=>i.value="");
 };
 
-const q = query(collection(db,"profiles"),orderBy("time","desc"));
+const q=query(collection(db,"profiles"),orderBy("time","desc"));
 
 onSnapshot(q,(snapshot)=>{
-  profilesDiv.innerHTML="";
+profiles.innerHTML="";
 
-  snapshot.forEach((doc)=>{
-    const d = doc.data();
+snapshot.forEach((doc)=>{
 
-    profilesDiv.innerHTML += `
-      <div class="card">
-        <div class="name">${d.name}</div>
-        <div class="tags">
-          <span>${d.word1}</span>
-          <span>${d.word2}</span>
-          <span>${d.word3}</span>
-        </div>
-      </div>
-    `;
-  });
+const d=doc.data();
+
+profiles.innerHTML+=`
+<div class="card">
+
+<div class="top">
+<div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
+
+<div>
+<div class="name">${d.name}</div>
+<div class="age">${d.age} years old</div>
+</div>
+</div>
+
+<p class="bio">${d.bio}</p>
+
+<div class="tags">
+<span>${d.word1}</span>
+<span>${d.word2}</span>
+<span>${d.word3}</span>
+</div>
+
+<div class="emoji">${d.emoji}</div>
+
+</div>
+`;
+});
 });
 </script>
 
