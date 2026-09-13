@@ -1,123 +1,163 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Very Tuff - Live Messages</title>
+  <title>Very Tuff Profiles</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #111827;
-      color: white;
-      max-width: 700px;
-      margin: 40px auto;
-      padding: 20px;
+    body{
+      margin:0;
+      font-family:Arial,sans-serif;
+      background:#0f172a;
+      color:white;
+      padding:30px;
     }
 
-    h1 {
-      text-align: center;
+    h1{ text-align:center; }
+
+    .box{
+      max-width:700px;
+      margin:auto;
+      background:#1e293b;
+      padding:20px;
+      border-radius:15px;
     }
 
-    input {
-      width: 70%;
-      padding: 12px;
-      border: none;
-      border-radius: 8px;
-      font-size: 16px;
+    input{
+      width:100%;
+      padding:12px;
+      margin:8px 0;
+      border:none;
+      border-radius:8px;
+      font-size:15px;
     }
 
-    button {
-      padding: 12px 18px;
-      border: none;
-      border-radius: 8px;
-      background: #2563eb;
-      color: white;
-      cursor: pointer;
-      font-size: 16px;
+    button{
+      width:100%;
+      padding:13px;
+      background:#2563eb;
+      color:white;
+      border:none;
+      border-radius:8px;
+      font-size:16px;
+      cursor:pointer;
+      margin-top:10px;
     }
 
-    button:hover {
-      background: #1d4ed8;
+    .profiles{
+      max-width:700px;
+      margin:25px auto;
     }
 
-    #messages {
-      margin-top: 25px;
+    .card{
+      background:#1e293b;
+      padding:18px;
+      border-radius:12px;
+      margin-bottom:12px;
     }
 
-    .msg {
-      background: #1f2937;
-      padding: 12px;
-      border-radius: 8px;
-      margin-bottom: 10px;
+    .name{
+      font-size:22px;
+      font-weight:bold;
+      margin-bottom:10px;
+    }
+
+    .tags span{
+      display:inline-block;
+      background:#334155;
+      padding:7px 12px;
+      border-radius:20px;
+      margin:4px;
     }
   </style>
 </head>
 <body>
 
-  <h1>🔥 Very Tuff Live Feed</h1>
+<h1>🔥 Very Tuff Profiles</h1>
 
-  <input id="message" placeholder="Type something...">
-  <button id="submitBtn">Submit</button>
+<div class="box">
+  <input id="name" placeholder="Your name">
+  <input id="word1" placeholder="Word 1">
+  <input id="word2" placeholder="Word 2">
+  <input id="word3" placeholder="Word 3">
 
-  <div id="messages"></div>
+  <button id="createBtn">Create Profile</button>
+</div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-    import {
-      getFirestore,
-      collection,
-      addDoc,
-      query,
-      orderBy,
-      onSnapshot
-    } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+<div class="profiles" id="profiles"></div>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-      authDomain: "tuffmonkey-f75b3.firebaseapp.com",
-      projectId: "tuffmonkey-f75b3",
-      storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
-      messagingSenderId: "897150250440",
-      appId: "1:897150250440:web:8a668c17d28074fad264fd"
-    };
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc,
+  onSnapshot,
+  query,
+  orderBy
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
+const firebaseConfig = {
+  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+  authDomain: "tuffmonkey-f75b3.firebaseapp.com",
+  projectId: "tuffmonkey-f75b3",
+  storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
+  messagingSenderId: "897150250440",
+  appId: "1:897150250440:web:8a668c17d28074fad264fd"
+};
 
-    const input = document.getElementById("message");
-    const button = document.getElementById("submitBtn");
-    const messages = document.getElementById("messages");
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
 
-    button.addEventListener("click", async () => {
-      const text = input.value.trim();
-      if (!text) return;
+const profilesDiv = document.getElementById("profiles");
 
-      await addDoc(collection(db, "messages"), {
-        text,
-        time: Date.now()
-      });
+document.getElementById("createBtn").onclick = async () => {
+  const name = document.getElementById("name").value.trim();
+  const w1 = document.getElementById("word1").value.trim();
+  const w2 = document.getElementById("word2").value.trim();
+  const w3 = document.getElementById("word3").value.trim();
 
-      input.value = "";
-    });
+  if(!name || !w1 || !w2 || !w3){
+    alert("Fill in everything!");
+    return;
+  }
 
-    const q = query(collection(db, "messages"), orderBy("time", "desc"));
+  await addDoc(collection(db,"profiles"),{
+    name,
+    word1:w1,
+    word2:w2,
+    word3:w3,
+    time:Date.now()
+  });
 
-    onSnapshot(q, (snapshot) => {
-      messages.innerHTML = "";
+  name.value="";
+  word1.value="";
+  word2.value="";
+  word3.value="";
+};
 
-      snapshot.forEach((doc) => {
-        const data = doc.data();
+const q = query(collection(db,"profiles"),orderBy("time","desc"));
 
-        const div = document.createElement("div");
-        div.className = "msg";
-        div.textContent = data.text;
+onSnapshot(q,(snapshot)=>{
+  profilesDiv.innerHTML="";
 
-        messages.appendChild(div);
-      });
-    });
-  </script>
+  snapshot.forEach((doc)=>{
+    const d = doc.data();
+
+    profilesDiv.innerHTML += `
+      <div class="card">
+        <div class="name">${d.name}</div>
+        <div class="tags">
+          <span>${d.word1}</span>
+          <span>${d.word2}</span>
+          <span>${d.word3}</span>
+        </div>
+      </div>
+    `;
+  });
+});
+</script>
 
 </body>
 </html>
