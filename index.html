@@ -143,28 +143,12 @@ border:1px solid #475569;
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-
-import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  getDocs,
-  where
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 import {
   getAuth,
   createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+  signInWithEmailAndPassword
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
@@ -180,174 +164,43 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const auth = getAuth(app);
 
-const loginBox = document.getElementById("loginBox");
-const appBox = document.getElementById("app");
-const welcome = document.getElementById("welcome");
-const profiles = document.getElementById("profiles");
-
-let currentUsername = "";
-
-// SIGN UP
-document.getElementById("signupBtn").onclick = async () => {
-
+// CREATE ACCOUNT
+document.getElementById("signupBtn").addEventListener("click", async () => {
   const username = document.getElementById("username").value.trim();
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
-  if(!username || !email || !password){
+  if (!username || !email || !password) {
     alert("Fill in every box!");
     return;
   }
 
-  try{
+  try {
+    const cred = await createUserWithEmailAndPassword(auth, email, password);
 
-    const user = await createUserWithEmailAndPassword(auth,email,password);
-
-    await addDoc(collection(db,"users"),{
-      uid:user.user.uid,
-      username:username
+    await addDoc(collection(db, "users"), {
+      uid: cred.user.uid,
+      username: username
     });
 
-    alert("Account created! You're now logged in.");
-
-  }catch(err){
-    alert(err.message);
+    alert("Account created! You can now log in.");
+  } catch (e) {
+    alert(e.message);
   }
-
-};
+});
 
 // LOGIN
-document.getElementById("loginBtn").onclick = async ()=>{
-
+document.getElementById("loginBtn").addEventListener("click", async () => {
   const email = document.getElementById("email").value.trim();
   const password = document.getElementById("password").value;
 
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-  }catch(err){
-    alert(err.message);
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    alert("Logged in!");
+  } catch (e) {
+    alert(e.message);
   }
-
-};
-
-// LOGOUT
-document.getElementById("logoutBtn").onclick = ()=> signOut(auth);
-
-// AUTH STATE
-onAuthStateChanged(auth, async(user)=>{
-
-  if(!user){
-    loginBox.style.display="block";
-    appBox.style.display="none";
-    return;
-  }
-
-  loginBox.style.display="none";
-  appBox.style.display="block";
-
-  const qUser = query(
-    collection(db,"users"),
-    where("uid","==",user.uid)
-  );
-
-  const snap = await getDocs(qUser);
-
-  currentUsername = snap.docs[0].data().username;
-
-  welcome.innerText = "Welcome, " + currentUsername;
-
-  loadProfiles();
-
 });
-
-// CREATE PROFILE
-document.getElementById("createBtn").onclick = async ()=>{
-
-  const user = auth.currentUser;
-
-  await addDoc(collection(db,"profiles"),{
-
-    name:currentUsername,
-    owner:user.uid,
-
-    age:Number(document.getElementById("age").value),
-    emoji:document.getElementById("emoji").value,
-    word1:document.getElementById("word1").value,
-    word2:document.getElementById("word2").value,
-    word3:document.getElementById("word3").value,
-    bio:document.getElementById("bio").value,
-
-    time:Date.now()
-
-  });
-
-  document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
-
-};
-
-// LOAD PROFILES
-function loadProfiles(){
-
-  const q = query(collection(db,"profiles"),orderBy("time","desc"));
-
-  onSnapshot(q,(snapshot)=>{
-
-    profiles.innerHTML="";
-
-    snapshot.forEach((p)=>{
-
-      const d = p.data();
-
-      profiles.innerHTML += `
-
-      <div class="card">
-
-        <div class="top">
-
-          <div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
-
-          <div>
-            <div class="name">${d.name}</div>
-            <div class="age">${d.age} years old</div>
-          </div>
-
-        </div>
-
-        <div class="bio">${d.bio}</div>
-
-        <div class="tags">
-          <span>${d.word1}</span>
-          <span>${d.word2}</span>
-          <span>${d.word3}</span>
-        </div>
-
-        <div class="emoji">${d.emoji}</div>
-
-        ${d.owner===auth.currentUser.uid?`
-          <button class="delete" onclick="window.del('${p.id}')">
-            Delete Profile
-          </button>
-        `:""}
-
-      </div>
-
-      `;
-
-    });
-
-  });
-
-}
-
-window.del = async(id)=>{
-
-  if(confirm("Delete your profile?")){
-    await deleteDoc(doc(db,"profiles",id));
-  }
-
-}
-
 </script>
-
 </body>
 </html>
