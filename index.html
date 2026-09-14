@@ -7,7 +7,7 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0f172a;color:#fff;padding:25px}
+body{background:#0f172a;color:white;padding:25px}
 .container{max-width:850px;margin:auto}
 h1{text-align:center;font-size:42px;margin-bottom:8px}
 .sub{text-align:center;color:#94a3b8;margin-bottom:25px}
@@ -47,7 +47,6 @@ cursor:pointer;
 }
 
 button:hover{background:#1d4ed8}
-
 .secondary{background:#475569}
 .secondary:hover{background:#64748b}
 
@@ -63,8 +62,11 @@ margin-bottom:18px;
 .avatar{
 width:65px;height:65px;border-radius:50%;
 background:#2563eb;
-display:flex;align-items:center;justify-content:center;
-font-size:28px;font-weight:bold;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+font-weight:bold;
 }
 
 .name{font-size:24px;font-weight:bold}
@@ -78,6 +80,8 @@ padding:7px 12px;
 border-radius:20px;
 margin:4px;
 }
+
+.emoji{font-size:30px;margin-top:12px}
 
 .delete{
 background:#334155;
@@ -95,30 +99,25 @@ border:1px solid #475569;
 <h1>🔥 VERY TUFF</h1>
 <p class="sub">Community Profiles</p>
 
-<!-- LOGIN -->
 <div id="loginBox" class="box">
 <h2>Login / Sign Up</h2>
 
-<input id="username" placeholder="Username (only for sign up)">
+<input id="username" placeholder="Username (for sign up)">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
 
 <button id="signupBtn">Create Account</button>
 <button id="loginBtn" class="secondary">Login</button>
-
 </div>
 
-<!-- APP -->
 <div id="app">
 
 <div class="box">
-<h2 id="welcome"></h2>
-
+<h2 id="welcome">Welcome</h2>
 <button id="logoutBtn" class="secondary">Logout</button>
 </div>
 
 <div class="box">
-
 <h2>Create Profile</h2>
 
 <input id="age" type="number" placeholder="Age">
@@ -133,16 +132,14 @@ border:1px solid #475569;
 <input id="word3" placeholder="Word 3">
 </div>
 
-<textarea id="bio" placeholder="Bio"></textarea>
+<textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
 
 <button id="createBtn">Post Profile</button>
-
 </div>
 
 <div id="profiles"></div>
 
 </div>
-
 </div>
 
 <script type="module">
@@ -150,175 +147,203 @@ border:1px solid #475569;
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
-getFirestore,
-collection,
-addDoc,
-query,
-orderBy,
-onSnapshot,
-deleteDoc,
-doc,
-getDocs,
-where
+  getFirestore,
+  collection,
+  addDoc,
+  query,
+  orderBy,
+  onSnapshot,
+  deleteDoc,
+  doc,
+  getDocs,
+  where
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  onAuthStateChanged,
+  signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const firebaseConfig={
-apiKey:"YOUR_API_KEY",
-authDomain:"tuffmonkey-f75b3.firebaseapp.com",
-projectId:"tuffmonkey-f75b3",
-storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
-messagingSenderId:"897150250440",
-appId:"1:897150250440:web:8a668c17d28074fad264fd"
+const firebaseConfig = {
+  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+  authDomain: "tuffmonkey-f75b3.firebaseapp.com",
+  projectId: "tuffmonkey-f75b3",
+  storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
+  messagingSenderId: "897150250440",
+  appId: "1:897150250440:web:8a668c17d28074fad264fd"
 };
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-const auth=getAuth(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-let currentUsername="";
+const loginBox = document.getElementById("loginBox");
+const appBox = document.getElementById("app");
+const welcome = document.getElementById("welcome");
+const profiles = document.getElementById("profiles");
 
-const loginBox=document.getElementById("loginBox");
-const appBox=document.getElementById("app");
-const welcome=document.getElementById("welcome");
-const profiles=document.getElementById("profiles");
+let currentUsername = "";
 
-document.getElementById("signupBtn").onclick=async()=>{
+// SIGN UP
+document.getElementById("signupBtn").onclick = async () => {
 
-const username=username.value.trim();
-const email=email.value.trim();
-const password=password.value;
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
-if(!username||!email||!password)return alert("Fill everything");
+  if(!username || !email || !password){
+    alert("Fill in every box!");
+    return;
+  }
 
-const user=await createUserWithEmailAndPassword(auth,email,password);
+  try{
 
-await addDoc(collection(db,"users"),{
-uid:user.user.uid,
-username
+    const user = await createUserWithEmailAndPassword(auth,email,password);
+
+    await addDoc(collection(db,"users"),{
+      uid:user.user.uid,
+      username:username
+    });
+
+    alert("Account created! You're now logged in.");
+
+  }catch(err){
+    alert(err.message);
+  }
+
+};
+
+// LOGIN
+document.getElementById("loginBtn").onclick = async ()=>{
+
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
+
+  try{
+    await signInWithEmailAndPassword(auth,email,password);
+  }catch(err){
+    alert(err.message);
+  }
+
+};
+
+// LOGOUT
+document.getElementById("logoutBtn").onclick = ()=> signOut(auth);
+
+// AUTH STATE
+onAuthStateChanged(auth, async(user)=>{
+
+  if(!user){
+    loginBox.style.display="block";
+    appBox.style.display="none";
+    return;
+  }
+
+  loginBox.style.display="none";
+  appBox.style.display="block";
+
+  const qUser = query(
+    collection(db,"users"),
+    where("uid","==",user.uid)
+  );
+
+  const snap = await getDocs(qUser);
+
+  currentUsername = snap.docs[0].data().username;
+
+  welcome.innerText = "Welcome, " + currentUsername;
+
+  loadProfiles();
+
 });
 
+// CREATE PROFILE
+document.getElementById("createBtn").onclick = async ()=>{
+
+  const user = auth.currentUser;
+
+  await addDoc(collection(db,"profiles"),{
+
+    name:currentUsername,
+    owner:user.uid,
+
+    age:Number(document.getElementById("age").value),
+    emoji:document.getElementById("emoji").value,
+    word1:document.getElementById("word1").value,
+    word2:document.getElementById("word2").value,
+    word3:document.getElementById("word3").value,
+    bio:document.getElementById("bio").value,
+
+    time:Date.now()
+
+  });
+
+  document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
+
 };
 
-document.getElementById("loginBtn").onclick=async()=>{
+// LOAD PROFILES
+function loadProfiles(){
 
-await signInWithEmailAndPassword(
-auth,
-email.value,
-password.value
-);
+  const q = query(collection(db,"profiles"),orderBy("time","desc"));
 
-};
+  onSnapshot(q,(snapshot)=>{
 
-document.getElementById("logoutBtn").onclick=()=>signOut(auth);
+    profiles.innerHTML="";
 
-onAuthStateChanged(auth,async(user)=>{
+    snapshot.forEach((p)=>{
 
-if(!user){
-loginBox.style.display="block";
-appBox.style.display="none";
-return;
+      const d = p.data();
+
+      profiles.innerHTML += `
+
+      <div class="card">
+
+        <div class="top">
+
+          <div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
+
+          <div>
+            <div class="name">${d.name}</div>
+            <div class="age">${d.age} years old</div>
+          </div>
+
+        </div>
+
+        <div class="bio">${d.bio}</div>
+
+        <div class="tags">
+          <span>${d.word1}</span>
+          <span>${d.word2}</span>
+          <span>${d.word3}</span>
+        </div>
+
+        <div class="emoji">${d.emoji}</div>
+
+        ${d.owner===auth.currentUser.uid?`
+          <button class="delete" onclick="window.del('${p.id}')">
+            Delete Profile
+          </button>
+        `:""}
+
+      </div>
+
+      `;
+
+    });
+
+  });
+
 }
 
-loginBox.style.display="none";
-appBox.style.display="block";
+window.del = async(id)=>{
 
-const q=query(collection(db,"users"),where("uid","==",user.uid));
-const snap=await getDocs(q);
-
-currentUsername=snap.docs[0].data().username;
-
-welcome.innerText="Welcome, "+currentUsername;
-
-loadProfiles(user);
-
-});
-
-document.getElementById("createBtn").onclick=async()=>{
-
-const user=auth.currentUser;
-
-await addDoc(collection(db,"profiles"),{
-
-name:currentUsername,
-owner:user.uid,
-age:Number(age.value),
-emoji:emoji.value,
-word1:word1.value,
-word2:word2.value,
-word3:word3.value,
-bio:bio.value,
-time:Date.now()
-
-});
-
-document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
-
-};
-
-function loadProfiles(user){
-
-const q=query(collection(db,"profiles"),orderBy("time","desc"));
-
-onSnapshot(q,(snapshot)=>{
-
-profiles.innerHTML="";
-
-snapshot.forEach((p)=>{
-
-const d=p.data();
-
-profiles.innerHTML+=`
-
-<div class="card">
-
-<div class="top">
-
-<div class="avatar">${d.name[0].toUpperCase()}</div>
-
-<div>
-<div class="name">${d.name}</div>
-<div class="age">${d.age} years old</div>
-</div>
-
-</div>
-
-<div class="bio">${d.bio}</div>
-
-<div class="tags">
-<span>${d.word1}</span>
-<span>${d.word2}</span>
-<span>${d.word3}</span>
-</div>
-
-<h2>${d.emoji}</h2>
-
-${d.owner===user.uid?`
-<button class="delete" onclick="window.del('${p.id}')">
-Delete Profile
-</button>`:""}
-
-</div>
-
-`;
-
-});
-
-});
-
-}
-
-window.del=async(id)=>{
-
-if(confirm("Delete profile?"))
-await deleteDoc(doc(db,"profiles",id));
+  if(confirm("Delete your profile?")){
+    await deleteDoc(doc(db,"profiles",id));
+  }
 
 }
 
