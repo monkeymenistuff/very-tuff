@@ -9,221 +9,207 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
 
 body{
-  background:linear-gradient(180deg,#b9e7ff 0%,#dff4ff 35%,#eef9ff 100%);
-  color:#183b56;
-  min-height:100vh;
-  padding:24px;
+background:linear-gradient(180deg,#b9e7ff 0%,#dff4ff 35%,#eef9ff 100%);
+color:#183b56;
+min-height:100vh;
+padding:24px;
 }
 
 .container{max-width:900px;margin:auto}
 
 h1{
-  text-align:center;
-  font-size:48px;
-  color:#0284c7;
-  margin-bottom:8px;
-  text-shadow:0 6px 18px rgba(2,132,199,.18);
+text-align:center;
+font-size:48px;
+color:#0284c7;
+margin-bottom:8px;
+text-shadow:0 6px 18px rgba(2,132,199,.18);
 }
 
 .sub{
-  text-align:center;
-  color:#4b6b84;
-  margin-bottom:28px;
-  font-weight:500;
+text-align:center;
+color:#4b6b84;
+margin-bottom:28px;
 }
 
 .box{
-  background:rgba(233,248,255,.88);
-  backdrop-filter:blur(18px);
-  border:2px solid #8ed8ff;
-  border-radius:22px;
-  padding:22px;
-  margin-bottom:22px;
-  box-shadow:0 12px 30px rgba(2,132,199,.10);
+background:rgba(233,248,255,.88);
+backdrop-filter:blur(18px);
+border:2px solid #8ed8ff;
+border-radius:22px;
+padding:22px;
+margin-bottom:22px;
+box-shadow:0 12px 30px rgba(2,132,199,.10);
 }
 
 input,textarea{
-  width:100%;
-  padding:13px;
-  margin:8px 0;
-  border-radius:12px;
-  border:2px solid #b8e6ff;
-  background:#f6fcff;
-  color:#0f172a;
-  font-size:15px;
+width:100%;
+padding:13px;
+margin:8px 0;
+border-radius:12px;
+border:2px solid #b8e6ff;
+background:#f6fcff;
+color:#0f172a;
+font-size:15px;
+}
+
+textarea{
+height:140px;
+resize:none;
 }
 
 input:focus,textarea:focus{
-  outline:none;
-  border-color:#38bdf8;
-  box-shadow:0 0 0 4px rgba(56,189,248,.15);
+outline:none;
+border-color:#38bdf8;
+box-shadow:0 0 0 4px rgba(56,189,248,.15);
 }
 
-textarea{height:90px;resize:none}
-.row{display:flex;gap:10px}
-
 button{
-  width:100%;
-  padding:13px;
-  margin-top:10px;
-  border:none;
-  border-radius:12px;
-  background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-  color:white;
-  font-weight:700;
-  cursor:pointer;
-  transition:.2s;
-  box-shadow:0 8px 20px rgba(14,165,233,.22);
+width:100%;
+padding:13px;
+margin-top:10px;
+border:none;
+border-radius:12px;
+background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+color:white;
+font-weight:700;
+cursor:pointer;
 }
 
 button:hover{transform:translateY(-2px)}
 
 .secondary{
-  background:#d6f0ff;
-  color:#0369a1;
-  box-shadow:none;
+background:#d6f0ff;
+color:#0369a1;
 }
 
 .card{
-  background:linear-gradient(180deg,#f5fcff,#ecf8ff);
-  border:2px solid #9edcff;
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 10px 22px rgba(14,165,233,.08);
+background:linear-gradient(180deg,#f5fcff,#ecf8ff);
+border:2px solid #9edcff;
+border-radius:22px;
+padding:20px;
+margin-bottom:18px;
+box-shadow:0 10px 22px rgba(14,165,233,.08);
 }
 
-.top{display:flex;align-items:center;gap:14px}
-
-.avatar{
-  width:70px;
-  height:70px;
-  border-radius:50%;
-  background:linear-gradient(135deg,#38bdf8,#0284c7);
-  color:white;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:28px;
-  font-weight:bold;
-  border:3px solid #dff6ff;
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:12px;
 }
 
-.name{font-size:24px;font-weight:700;color:#0f172a}
-.age{color:#64748b}
-
-.bio{
-  margin:16px 0;
-  color:#334155;
-  line-height:1.6;
-  font-style:italic;
+.user{
+font-weight:700;
+font-size:17px;
+color:#0369a1;
 }
 
-.tag{
-  display:inline-block;
-  background:#cfefff;
-  color:#075985;
-  border:1px solid #7dd3fc;
-  padding:8px 14px;
-  border-radius:999px;
-  margin:4px;
-  font-weight:600;
+.time{
+font-size:13px;
+color:#64748b;
 }
 
-.emoji{font-size:30px;margin-top:10px}
+.title{
+font-size:26px;
+font-weight:700;
+color:#0f172a;
+margin:10px 0;
+}
+
+.content{
+font-size:16px;
+line-height:1.6;
+color:#334155;
+white-space:pre-wrap;
+}
 
 .delete{
-  background:#e5f4ff;
-  color:#64748b;
-  border:1px solid #b8dff5;
-  box-shadow:none;
+background:#e5f4ff;
+color:#64748b;
+border:1px solid #b8dff5;
+margin-top:18px;
 }
 
-.delete:hover{background:#d6edff}
+.delete:hover{
+background:#d6edff;
+}
 
 #app{display:none}
 </style>
 </head>
 
 <body>
+
 <div class="container">
 
 <h1>🔥 VERY TUFF</h1>
-<p class="sub">The community profile wall.</p>
+<p class="sub">Share anything with the community.</p>
 
 <div id="loginBox" class="box">
-  <h2>Login / Sign Up</h2>
+<h2>Login / Sign Up</h2>
 
-  <input id="username" placeholder="Username (only for sign up)">
-  <input id="email" placeholder="Email">
-  <input id="password" type="password" placeholder="Password">
+<input id="username" placeholder="Username (only for sign up)">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
 
-  <button id="signup">Create Account</button>
-  <button id="login" class="secondary">Login</button>
+<button id="signup">Create Account</button>
+<button id="login" class="secondary">Login</button>
 </div>
 
 <div id="app">
 
-  <div class="box">
-    <h2 id="welcome"></h2>
-    <button id="logout" class="secondary">Logout</button>
-  </div>
+<div class="box">
+<h2 id="welcome"></h2>
+<button id="logout" class="secondary">Logout</button>
+</div>
 
-  <div class="box">
-    <h2>Create Your Profile</h2>
+<div class="box">
+<h2>Create Post</h2>
 
-    <input id="age" type="number" placeholder="Age">
+<input id="title" placeholder="Post title...">
 
-    <div class="row">
-      <input id="emoji" placeholder="Emoji 😎">
-      <input id="word1" placeholder="Word 1">
-    </div>
+<textarea id="text" placeholder="What's on your mind?"></textarea>
 
-    <div class="row">
-      <input id="word2" placeholder="Word 2">
-      <input id="word3" placeholder="Word 3">
-    </div>
+<button id="post">Post</button>
+</div>
 
-    <textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
-
-    <button id="post">Post Profile</button>
-  </div>
-
-  <div id="profiles"></div>
+<div id="posts"></div>
 
 </div>
+
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  getDocs,
-  where
+getFirestore,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+deleteDoc,
+doc,
+getDocs,
+where
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig={
-  apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-  authDomain:"tuffmonkey-f75b3.firebaseapp.com",
-  projectId:"tuffmonkey-f75b3",
-  storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
-  messagingSenderId:"897150250440",
-  appId:"1:897150250440:web:8a668c17d28074fad264fd"
+apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+authDomain:"tuffmonkey-f75b3.firebaseapp.com",
+projectId:"tuffmonkey-f75b3",
+storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
+messagingSenderId:"897150250440",
+appId:"1:897150250440:web:8a668c17d28074fad264fd"
 };
 
 const ADMIN_EMAIL="monkeymen0706@gmail.com";
@@ -238,43 +224,47 @@ let isAdmin=false;
 const loginBox=document.getElementById("loginBox");
 const appBox=document.getElementById("app");
 const welcome=document.getElementById("welcome");
-const profiles=document.getElementById("profiles");
+const posts=document.getElementById("posts");
 
 // SIGN UP
 document.getElementById("signup").onclick=async()=>{
-  const username=document.getElementById("username").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
 
-  if(!username||!email||!password){
-    alert("Fill in every box!");
-    return;
-  }
+const username=document.getElementById("username").value.trim();
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
 
-  try{
-    const user=await createUserWithEmailAndPassword(auth,email,password);
+if(!username||!email||!password){
+alert("Fill in every box!");
+return;
+}
 
-    await addDoc(collection(db,"users"),{
-      uid:user.user.uid,
-      username:username
-    });
+try{
+const user=await createUserWithEmailAndPassword(auth,email,password);
 
-    alert("Account created! 🎉");
-  }catch(e){
-    alert(e.message);
-  }
+await addDoc(collection(db,"users"),{
+uid:user.user.uid,
+username:username
+});
+
+alert("Account created! 🎉");
+}catch(e){
+alert(e.message);
+}
+
 };
 
 // LOGIN
 document.getElementById("login").onclick=async()=>{
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
 
-  try{
-    await signInWithEmailAndPassword(auth,email,password);
-  }catch(e){
-    alert(e.message);
-  }
+const email=document.getElementById("email").value.trim();
+const password=document.getElementById("password").value;
+
+try{
+await signInWithEmailAndPassword(auth,email,password);
+}catch(e){
+alert(e.message);
+}
+
 };
 
 // LOGOUT
@@ -283,96 +273,117 @@ document.getElementById("logout").onclick=()=>signOut(auth);
 // AUTH
 onAuthStateChanged(auth,async(user)=>{
 
-  if(!user){
-    loginBox.style.display="block";
-    appBox.style.display="none";
-    return;
-  }
+if(!user){
+loginBox.style.display="block";
+appBox.style.display="none";
+return;
+}
 
-  loginBox.style.display="none";
-  appBox.style.display="block";
+loginBox.style.display="none";
+appBox.style.display="block";
 
-  isAdmin=user.email===ADMIN_EMAIL;
+isAdmin=user.email===ADMIN_EMAIL;
 
-  const q=query(collection(db,"users"),where("uid","==",user.uid));
-  const snap=await getDocs(q);
+const q=query(collection(db,"users"),where("uid","==",user.uid));
+const snap=await getDocs(q);
 
-  currentUsername=snap.docs[0].data().username;
+currentUsername=snap.docs[0].data().username;
 
-  welcome.innerHTML=`Welcome, ${currentUsername}${isAdmin?" 👑 Admin":""}`;
+welcome.innerHTML=`Welcome, ${currentUsername}${isAdmin?" 👑 Admin":""}`;
 
-  loadProfiles();
+loadPosts();
+
 });
 
-// POST PROFILE
+// CREATE POST
 document.getElementById("post").onclick=async()=>{
 
-  await addDoc(collection(db,"profiles"),{
-    name:currentUsername,
-    owner:auth.currentUser.uid,
-    age:Number(document.getElementById("age").value),
-    emoji:document.getElementById("emoji").value,
-    word1:document.getElementById("word1").value,
-    word2:document.getElementById("word2").value,
-    word3:document.getElementById("word3").value,
-    bio:document.getElementById("bio").value,
-    time:Date.now()
-  });
+const title=document.getElementById("title").value.trim();
+const text=document.getElementById("text").value.trim();
 
-  document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
+if(!title||!text){
+alert("Write a title and some text!");
+return;
+}
+
+await addDoc(collection(db,"posts"),{
+
+username:currentUsername,
+owner:auth.currentUser.uid,
+title,
+text,
+created:Date.now()
+
+});
+
+document.getElementById("title").value="";
+document.getElementById("text").value="";
+
 };
 
-// LOAD PROFILES
-function loadProfiles(){
+// LOAD POSTS
+function loadPosts(){
 
-  const q=query(collection(db,"profiles"),orderBy("time","desc"));
+const q=query(collection(db,"posts"),orderBy("created","desc"));
 
-  onSnapshot(q,(snapshot)=>{
+onSnapshot(q,(snapshot)=>{
 
-    profiles.innerHTML="";
+posts.innerHTML="";
 
-    snapshot.forEach((profile)=>{
+snapshot.forEach((post)=>{
 
-      const d=profile.data();
+const d=post.data();
 
-      profiles.innerHTML+=`
-      <div class="card">
+const time=new Date(d.created).toLocaleString("en-NZ",{
+day:"numeric",
+month:"short",
+year:"numeric",
+hour:"numeric",
+minute:"2-digit"
+});
 
-        <div class="top">
-          <div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
+posts.innerHTML+=`
 
-          <div>
-            <div class="name">${d.name}</div>
-            <div class="age">${d.age} years old</div>
-          </div>
-        </div>
+<div class="card">
 
-        <div class="bio">“${d.bio}”</div>
+<div class="header">
 
-        <div>
-          <span class="tag">${d.word1}</span>
-          <span class="tag">${d.word2}</span>
-          <span class="tag">${d.word3}</span>
-        </div>
+<div class="user">${d.username}</div>
 
-        <div class="emoji">${d.emoji}</div>
+<div class="time">${time}</div>
 
-        ${(d.owner===auth.currentUser.uid||isAdmin)?`
-          <button class="delete" onclick="window.del('${profile.id}')">
-            🗑 Delete Profile
-          </button>
-        `:""}
+</div>
 
-      </div>`;
-    });
-  });
+<div class="title">${d.title}</div>
+
+<div class="content">${d.text}</div>
+
+${(d.owner===auth.currentUser.uid||isAdmin)?`
+
+<button class="delete" onclick="window.del('${post.id}')">
+🗑 Delete Post
+</button>
+
+`:""}
+
+</div>
+
+`;
+
+});
+
+});
+
 }
 
 window.del=async(id)=>{
-  if(confirm("Delete this profile?")){
-    await deleteDoc(doc(db,"profiles",id));
-  }
+
+if(confirm("Delete this post?")){
+await deleteDoc(doc(db,"posts",id));
+}
+
 };
+
 </script>
 
 </body>
