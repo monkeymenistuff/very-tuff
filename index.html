@@ -6,35 +6,18 @@
 <title>Very Tuff</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,Helvetica,sans-serif;}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{background:#0f172a;color:#fff;padding:25px}
+.container{max-width:850px;margin:auto}
+h1{text-align:center;font-size:42px;margin-bottom:8px}
+.sub{text-align:center;color:#94a3b8;margin-bottom:25px}
 
-body{
-background:linear-gradient(180deg,#0f172a,#111827);
-color:white;
-padding:25px;
-}
-
-.container{max-width:850px;margin:auto;}
-
-h1{
-text-align:center;
-font-size:44px;
-margin-bottom:8px;
-}
-
-.sub{
-text-align:center;
-color:#94a3b8;
-margin-bottom:30px;
-}
-
-.form{
+.box{
 background:#1e293b;
 border:2px solid #334155;
-border-radius:22px;
-padding:22px;
-margin-bottom:30px;
-box-shadow:0 8px 25px rgba(0,0,0,.35);
+border-radius:18px;
+padding:20px;
+margin-bottom:25px;
 }
 
 input,textarea{
@@ -48,85 +31,60 @@ color:white;
 font-size:15px;
 }
 
-textarea{
-height:90px;
-resize:none;
-}
-
-.row{display:flex;gap:10px;}
+textarea{height:90px;resize:none}
+.row{display:flex;gap:10px}
 
 button{
 width:100%;
-padding:14px;
+padding:13px;
 margin-top:10px;
 border:none;
 border-radius:10px;
 background:#2563eb;
 color:white;
-font-size:16px;
 font-weight:bold;
 cursor:pointer;
 }
 
-button:hover{background:#1d4ed8;}
+button:hover{background:#1d4ed8}
+
+.secondary{background:#475569}
+.secondary:hover{background:#64748b}
 
 .card{
 background:linear-gradient(145deg,#1f2937,#111827);
 border:2px solid #475569;
-border-radius:22px;
-padding:22px;
-margin-bottom:22px;
-box-shadow:0 10px 25px rgba(0,0,0,.35);
+border-radius:18px;
+padding:20px;
+margin-bottom:18px;
 }
 
-.top{
-display:flex;
-align-items:center;
-gap:15px;
-}
-
+.top{display:flex;align-items:center;gap:15px}
 .avatar{
-width:72px;
-height:72px;
-border-radius:50%;
-background:linear-gradient(135deg,#3b82f6,#2563eb);
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-font-weight:bold;
+width:65px;height:65px;border-radius:50%;
+background:#2563eb;
+display:flex;align-items:center;justify-content:center;
+font-size:28px;font-weight:bold;
 }
 
-.name{font-size:26px;font-weight:bold;}
-.age{color:#94a3b8;margin-top:4px;}
-.bio{margin:16px 0;line-height:1.6;}
+.name{font-size:24px;font-weight:bold}
+.age{color:#94a3b8}
+.bio{margin:15px 0;line-height:1.5}
 
 .tags span{
 display:inline-block;
 background:#334155;
-padding:8px 14px;
+padding:7px 12px;
 border-radius:20px;
 margin:4px;
 }
 
-.emoji{font-size:30px;margin-top:12px;}
-
 .delete{
 background:#334155;
-color:#cbd5e1;
 border:1px solid #475569;
-margin-top:16px;
 }
 
-.delete:hover{
-background:#475569;
-}
-
-footer{
-text-align:center;
-color:#64748b;
-margin-top:30px;
-}
+#app{display:none}
 </style>
 </head>
 
@@ -135,149 +93,235 @@ margin-top:30px;
 <div class="container">
 
 <h1>🔥 VERY TUFF</h1>
-<p class="sub">Create your profile • Everyone can see it live</p>
+<p class="sub">Community Profiles</p>
 
-<div class="form">
+<!-- LOGIN -->
+<div id="loginBox" class="box">
+<h2>Login / Sign Up</h2>
+
+<input id="username" placeholder="Username (only for sign up)">
+<input id="email" placeholder="Email">
+<input id="password" type="password" placeholder="Password">
+
+<button id="signupBtn">Create Account</button>
+<button id="loginBtn" class="secondary">Login</button>
+
+</div>
+
+<!-- APP -->
+<div id="app">
+
+<div class="box">
+<h2 id="welcome"></h2>
+
+<button id="logoutBtn" class="secondary">Logout</button>
+</div>
+
+<div class="box">
+
 <h2>Create Profile</h2>
 
-<input id="name" placeholder="Your name">
+<input id="age" type="number" placeholder="Age">
 
 <div class="row">
-<input id="age" type="number" placeholder="Age">
-<input id="emoji" placeholder="Favourite emoji 😎">
+<input id="emoji" placeholder="Emoji 😎">
+<input id="word1" placeholder="Word 1">
 </div>
 
 <div class="row">
-<input id="word1" placeholder="Word 1">
 <input id="word2" placeholder="Word 2">
 <input id="word3" placeholder="Word 3">
 </div>
 
-<textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
+<textarea id="bio" placeholder="Bio"></textarea>
 
-<button id="createBtn">Create Profile</button>
+<button id="createBtn">Post Profile</button>
+
 </div>
 
 <div id="profiles"></div>
 
-<footer>Very Tuff © 2026</footer>
+</div>
 
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  deleteDoc,
-  doc
+getFirestore,
+collection,
+addDoc,
+query,
+orderBy,
+onSnapshot,
+deleteDoc,
+doc,
+getDocs,
+where
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
-  getAuth,
-  signInAnonymously
+getAuth,
+createUserWithEmailAndPassword,
+signInWithEmailAndPassword,
+onAuthStateChanged,
+signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-  authDomain: "tuffmonkey-f75b3.firebaseapp.com",
-  projectId: "tuffmonkey-f75b3",
-  storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
-  messagingSenderId: "897150250440",
-  appId: "1:897150250440:web:8a668c17d28074fad264fd"
+const firebaseConfig={
+apiKey:"YOUR_API_KEY",
+authDomain:"tuffmonkey-f75b3.firebaseapp.com",
+projectId:"tuffmonkey-f75b3",
+storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
+messagingSenderId:"897150250440",
+appId:"1:897150250440:web:8a668c17d28074fad264fd"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
 
-// Everyone gets their own anonymous account
-const auth = getAuth(app);
-await signInAnonymously(auth);
-const currentUser = auth.currentUser;
+let currentUsername="";
 
-const profilesDiv = document.getElementById("profiles");
+const loginBox=document.getElementById("loginBox");
+const appBox=document.getElementById("app");
+const welcome=document.getElementById("welcome");
+const profiles=document.getElementById("profiles");
 
-document.getElementById("createBtn").onclick = async () => {
+document.getElementById("signupBtn").onclick=async()=>{
 
-  const name = document.getElementById("name").value.trim();
-  const age = Number(document.getElementById("age").value);
-  const emoji = document.getElementById("emoji").value.trim();
-  const word1 = document.getElementById("word1").value.trim();
-  const word2 = document.getElementById("word2").value.trim();
-  const word3 = document.getElementById("word3").value.trim();
-  const bio = document.getElementById("bio").value.trim();
+const username=username.value.trim();
+const email=email.value.trim();
+const password=password.value;
 
-  if(!name || !age || !word1 || !word2 || !word3 || !bio){
-    alert("Fill in every box!");
-    return;
-  }
+if(!username||!email||!password)return alert("Fill everything");
 
-  await addDoc(collection(db,"profiles"),{
-    name,
-    age,
-    emoji,
-    word1,
-    word2,
-    word3,
-    bio,
-    owner: currentUser.uid,
-    time: Date.now()
-  });
+const user=await createUserWithEmailAndPassword(auth,email,password);
 
-  document.querySelectorAll("input, textarea").forEach(e=>e.value="");
+await addDoc(collection(db,"users"),{
+uid:user.user.uid,
+username
+});
+
 };
 
-window.deleteProfile = async (id)=>{
-  if(confirm("Delete your profile?")){
-    await deleteDoc(doc(db,"profiles",id));
-  }
+document.getElementById("loginBtn").onclick=async()=>{
+
+await signInWithEmailAndPassword(
+auth,
+email.value,
+password.value
+);
+
 };
 
-const q = query(collection(db,"profiles"),orderBy("time","desc"));
+document.getElementById("logoutBtn").onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,async(user)=>{
+
+if(!user){
+loginBox.style.display="block";
+appBox.style.display="none";
+return;
+}
+
+loginBox.style.display="none";
+appBox.style.display="block";
+
+const q=query(collection(db,"users"),where("uid","==",user.uid));
+const snap=await getDocs(q);
+
+currentUsername=snap.docs[0].data().username;
+
+welcome.innerText="Welcome, "+currentUsername;
+
+loadProfiles(user);
+
+});
+
+document.getElementById("createBtn").onclick=async()=>{
+
+const user=auth.currentUser;
+
+await addDoc(collection(db,"profiles"),{
+
+name:currentUsername,
+owner:user.uid,
+age:Number(age.value),
+emoji:emoji.value,
+word1:word1.value,
+word2:word2.value,
+word3:word3.value,
+bio:bio.value,
+time:Date.now()
+
+});
+
+document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
+
+};
+
+function loadProfiles(user){
+
+const q=query(collection(db,"profiles"),orderBy("time","desc"));
 
 onSnapshot(q,(snapshot)=>{
 
-  profilesDiv.innerHTML="";
+profiles.innerHTML="";
 
-  snapshot.forEach((profile)=>{
+snapshot.forEach((p)=>{
 
-    const d = profile.data();
+const d=p.data();
 
-    profilesDiv.innerHTML += `
-    <div class="card">
+profiles.innerHTML+=`
 
-      <div class="top">
-        <div class="avatar">${d.name.charAt(0).toUpperCase()}</div>
+<div class="card">
 
-        <div>
-          <div class="name">${d.name}</div>
-          <div class="age">🧍 ${d.age} years old</div>
-        </div>
-      </div>
+<div class="top">
 
-      <div class="bio">"${d.bio}"</div>
+<div class="avatar">${d.name[0].toUpperCase()}</div>
 
-      <div class="tags">
-        <span>✨ ${d.word1}</span>
-        <span>🌊 ${d.word2}</span>
-        <span>⚡ ${d.word3}</span>
-      </div>
+<div>
+<div class="name">${d.name}</div>
+<div class="age">${d.age} years old</div>
+</div>
 
-      <div class="emoji">${d.emoji || "🙂"}</div>
+</div>
 
-      ${d.owner === currentUser.uid ? `
-        <button class="delete" onclick="deleteProfile('${profile.id}')">
-          Delete Profile
-        </button>
-      ` : ""}
+<div class="bio">${d.bio}</div>
 
-    </div>`;
-  });
+<div class="tags">
+<span>${d.word1}</span>
+<span>${d.word2}</span>
+<span>${d.word3}</span>
+</div>
+
+<h2>${d.emoji}</h2>
+
+${d.owner===user.uid?`
+<button class="delete" onclick="window.del('${p.id}')">
+Delete Profile
+</button>`:""}
+
+</div>
+
+`;
+
 });
+
+});
+
+}
+
+window.del=async(id)=>{
+
+if(confirm("Delete profile?"))
+await deleteDoc(doc(db,"profiles",id));
+
+}
+
 </script>
 
 </body>
