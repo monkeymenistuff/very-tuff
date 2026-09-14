@@ -9,7 +9,7 @@
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
 
 body{
-  background:linear-gradient(180deg,#dff4ff 0%,#f7fcff 45%,#ffffff 100%);
+  background:linear-gradient(180deg,#b9e7ff 0%,#dff4ff 35%,#eef9ff 100%);
   color:#183b56;
   min-height:100vh;
   padding:24px;
@@ -20,25 +20,26 @@ body{
 h1{
   text-align:center;
   font-size:48px;
-  color:#0ea5e9;
+  color:#0284c7;
   margin-bottom:8px;
-  text-shadow:0 4px 12px rgba(14,165,233,.15);
+  text-shadow:0 6px 18px rgba(2,132,199,.18);
 }
 
 .sub{
   text-align:center;
-  color:#64748b;
+  color:#4b6b84;
   margin-bottom:28px;
+  font-weight:500;
 }
 
 .box{
-  background:rgba(255,255,255,.78);
-  backdrop-filter:blur(16px);
-  border:1px solid #bae6fd;
+  background:rgba(233,248,255,.88);
+  backdrop-filter:blur(18px);
+  border:2px solid #8ed8ff;
   border-radius:22px;
   padding:22px;
   margin-bottom:22px;
-  box-shadow:0 12px 35px rgba(14,165,233,.10);
+  box-shadow:0 12px 30px rgba(2,132,199,.10);
 }
 
 input,textarea{
@@ -46,8 +47,8 @@ input,textarea{
   padding:13px;
   margin:8px 0;
   border-radius:12px;
-  border:1px solid #bae6fd;
-  background:white;
+  border:2px solid #b8e6ff;
+  background:#f6fcff;
   color:#0f172a;
   font-size:15px;
 }
@@ -55,11 +56,10 @@ input,textarea{
 input:focus,textarea:focus{
   outline:none;
   border-color:#38bdf8;
-  box-shadow:0 0 0 4px rgba(56,189,248,.18);
+  box-shadow:0 0 0 4px rgba(56,189,248,.15);
 }
 
 textarea{height:90px;resize:none}
-
 .row{display:flex;gap:10px}
 
 button{
@@ -73,53 +73,57 @@ button{
   font-weight:700;
   cursor:pointer;
   transition:.2s;
-  box-shadow:0 8px 20px rgba(14,165,233,.25);
+  box-shadow:0 8px 20px rgba(14,165,233,.22);
 }
 
 button:hover{transform:translateY(-2px)}
 
 .secondary{
-  background:#e0f2fe;
+  background:#d6f0ff;
   color:#0369a1;
   box-shadow:none;
 }
 
 .card{
-  background:white;
-  border:1px solid #dbeafe;
+  background:linear-gradient(180deg,#f5fcff,#ecf8ff);
+  border:2px solid #9edcff;
   border-radius:22px;
   padding:20px;
   margin-bottom:18px;
-  box-shadow:0 12px 28px rgba(14,165,233,.08);
+  box-shadow:0 10px 22px rgba(14,165,233,.08);
 }
 
-.top{
-  display:flex;
-  align-items:center;
-  gap:14px;
-}
+.top{display:flex;align-items:center;gap:14px}
 
 .avatar{
   width:70px;
   height:70px;
   border-radius:50%;
-  background:linear-gradient(135deg,#7dd3fc,#0ea5e9);
+  background:linear-gradient(135deg,#38bdf8,#0284c7);
   color:white;
   display:flex;
   align-items:center;
   justify-content:center;
   font-size:28px;
   font-weight:bold;
+  border:3px solid #dff6ff;
 }
 
 .name{font-size:24px;font-weight:700;color:#0f172a}
 .age{color:#64748b}
-.bio{margin:16px 0;color:#334155;line-height:1.6}
+
+.bio{
+  margin:16px 0;
+  color:#334155;
+  line-height:1.6;
+  font-style:italic;
+}
 
 .tag{
   display:inline-block;
-  background:#e0f2fe;
-  color:#0369a1;
+  background:#cfefff;
+  color:#075985;
+  border:1px solid #7dd3fc;
   padding:8px 14px;
   border-radius:999px;
   margin:4px;
@@ -129,29 +133,28 @@ button:hover{transform:translateY(-2px)}
 .emoji{font-size:30px;margin-top:10px}
 
 .delete{
-  background:#f8fafc;
+  background:#e5f4ff;
   color:#64748b;
-  border:1px solid #cbd5e1;
+  border:1px solid #b8dff5;
   box-shadow:none;
 }
 
-.delete:hover{background:#eef2f7}
+.delete:hover{background:#d6edff}
 
 #app{display:none}
 </style>
 </head>
 
 <body>
-
 <div class="container">
 
 <h1>🔥 VERY TUFF</h1>
-<p class="sub">Community Profiles</p>
+<p class="sub">The community profile wall.</p>
 
 <div id="loginBox" class="box">
   <h2>Login / Sign Up</h2>
 
-  <input id="username" placeholder="Username (sign up only)">
+  <input id="username" placeholder="Username (only for sign up)">
   <input id="email" placeholder="Email">
   <input id="password" type="password" placeholder="Password">
 
@@ -167,7 +170,7 @@ button:hover{transform:translateY(-2px)}
   </div>
 
   <div class="box">
-    <h2>Create Profile</h2>
+    <h2>Create Your Profile</h2>
 
     <input id="age" type="number" placeholder="Age">
 
@@ -189,7 +192,6 @@ button:hover{transform:translateY(-2px)}
   <div id="profiles"></div>
 
 </div>
-
 </div>
 
 <script type="module">
@@ -238,6 +240,7 @@ const appBox=document.getElementById("app");
 const welcome=document.getElementById("welcome");
 const profiles=document.getElementById("profiles");
 
+// SIGN UP
 document.getElementById("signup").onclick=async()=>{
   const username=document.getElementById("username").value.trim();
   const email=document.getElementById("email").value.trim();
@@ -256,12 +259,13 @@ document.getElementById("signup").onclick=async()=>{
       username:username
     });
 
-    alert("Account created!");
+    alert("Account created! 🎉");
   }catch(e){
     alert(e.message);
   }
 };
 
+// LOGIN
 document.getElementById("login").onclick=async()=>{
   const email=document.getElementById("email").value.trim();
   const password=document.getElementById("password").value;
@@ -273,8 +277,10 @@ document.getElementById("login").onclick=async()=>{
   }
 };
 
+// LOGOUT
 document.getElementById("logout").onclick=()=>signOut(auth);
 
+// AUTH
 onAuthStateChanged(auth,async(user)=>{
 
   if(!user){
@@ -298,6 +304,7 @@ onAuthStateChanged(auth,async(user)=>{
   loadProfiles();
 });
 
+// POST PROFILE
 document.getElementById("post").onclick=async()=>{
 
   await addDoc(collection(db,"profiles"),{
@@ -315,6 +322,7 @@ document.getElementById("post").onclick=async()=>{
   document.querySelectorAll("#app input, textarea").forEach(i=>i.value="");
 };
 
+// LOAD PROFILES
 function loadProfiles(){
 
   const q=query(collection(db,"profiles"),orderBy("time","desc"));
@@ -339,7 +347,7 @@ function loadProfiles(){
           </div>
         </div>
 
-        <div class="bio">${d.bio}</div>
+        <div class="bio">“${d.bio}”</div>
 
         <div>
           <span class="tag">${d.word1}</span>
