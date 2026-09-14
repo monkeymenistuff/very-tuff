@@ -4,203 +4,129 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Very Tuff</title>
-
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
-body{background:#0f172a;color:white;padding:25px}
-.container{max-width:850px;margin:auto}
-h1{text-align:center;font-size:42px;margin-bottom:8px}
-.sub{text-align:center;color:#94a3b8;margin-bottom:25px}
-
-.box{
-background:#1e293b;
-border:2px solid #334155;
-border-radius:18px;
-padding:20px;
-margin-bottom:25px;
-}
-
-input,textarea{
-width:100%;
-padding:12px;
-margin:8px 0;
-border:none;
-border-radius:10px;
-background:#334155;
-color:white;
-font-size:15px;
-}
-
-textarea{height:90px;resize:none}
-.row{display:flex;gap:10px}
-
-button{
-width:100%;
-padding:13px;
-margin-top:10px;
-border:none;
-border-radius:10px;
-background:#2563eb;
-color:white;
-font-weight:bold;
-cursor:pointer;
-}
-
-button:hover{background:#1d4ed8}
-.secondary{background:#475569}
-.secondary:hover{background:#64748b}
-
-.card{
-background:linear-gradient(145deg,#1f2937,#111827);
-border:2px solid #475569;
-border-radius:18px;
-padding:20px;
-margin-bottom:18px;
-}
-
-.top{display:flex;align-items:center;gap:15px}
-.avatar{
-width:65px;height:65px;border-radius:50%;
-background:#2563eb;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-font-weight:bold;
-}
-
-.name{font-size:24px;font-weight:bold}
-.age{color:#94a3b8}
-.bio{margin:15px 0;line-height:1.5}
-
-.tags span{
-display:inline-block;
-background:#334155;
-padding:7px 12px;
-border-radius:20px;
-margin:4px;
-}
-
-.emoji{font-size:30px;margin-top:12px}
-
-.delete{
-background:#334155;
-border:1px solid #475569;
-}
-
-#app{display:none}
+body{margin:0;font-family:Arial;background:#0f172a;color:#fff;padding:20px}
+.container{max-width:850px;margin:auto}.box{background:#1e293b;padding:20px;border-radius:18px;margin-bottom:20px}
+input,textarea{width:100%;padding:12px;margin:6px 0;border:none;border-radius:10px;background:#334155;color:#fff;box-sizing:border-box}
+.row{display:flex;gap:8px}button{width:100%;padding:12px;border:none;border-radius:10px;background:#2563eb;color:#fff;font-weight:bold;cursor:pointer;margin-top:8px}.secondary{background:#475569}
+.card{background:#111827;padding:18px;border-radius:16px;margin-top:15px;border:1px solid #374151}.top{display:flex;gap:12px;align-items:center}.avatar{width:60px;height:60px;border-radius:50%;background:#2563eb;display:flex;align-items:center;justify-content:center;font-size:26px;font-weight:bold}.tag{display:inline-block;background:#334155;padding:6px 10px;border-radius:20px;margin:3px}.delete{background:#374151}#app{display:none}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
 <h1>🔥 VERY TUFF</h1>
-<p class="sub">Community Profiles</p>
-
 <div id="loginBox" class="box">
 <h2>Login / Sign Up</h2>
-
-<input id="username" placeholder="Username (for sign up)">
+<input id="username" placeholder="Username (signup only)">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
-
-<button id="signupBtn">Create Account</button>
-<button id="loginBtn" class="secondary">Login</button>
+<button id="signup">Create Account</button>
+<button id="login" class="secondary">Login</button>
 </div>
-
 <div id="app">
-
 <div class="box">
-<h2 id="welcome">Welcome</h2>
-<button id="logoutBtn" class="secondary">Logout</button>
+<h2 id="welcome"></h2>
+<button id="logout" class="secondary">Logout</button>
 </div>
-
 <div class="box">
 <h2>Create Profile</h2>
-
 <input id="age" type="number" placeholder="Age">
-
 <div class="row">
 <input id="emoji" placeholder="Emoji 😎">
 <input id="word1" placeholder="Word 1">
 </div>
-
 <div class="row">
 <input id="word2" placeholder="Word 2">
 <input id="word3" placeholder="Word 3">
 </div>
-
-<textarea id="bio" placeholder="Tell everyone about yourself..."></textarea>
-
-<button id="createBtn">Post Profile</button>
+<textarea id="bio" placeholder="Bio"></textarea>
+<button id="post">Post Profile</button>
 </div>
-
 <div id="profiles"></div>
-
 </div>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, where } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const firebaseConfig = {
-  apiKey: "AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-  authDomain: "tuffmonkey-f75b3.firebaseapp.com",
-  projectId: "tuffmonkey-f75b3",
-  storageBucket: "tuffmonkey-f75b3.firebasestorage.app",
-  messagingSenderId: "897150250440",
-  appId: "1:897150250440:web:8a668c17d28074fad264fd"
+const firebaseConfig={
+apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+authDomain:"tuffmonkey-f75b3.firebaseapp.com",
+projectId:"tuffmonkey-f75b3",
+storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
+messagingSenderId:"897150250440",
+appId:"1:897150250440:web:8a668c17d28074fad264fd"
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const ADMIN_EMAIL="monkeymen0706@gmail.com";
 
-// CREATE ACCOUNT
-document.getElementById("signupBtn").addEventListener("click", async () => {
-  const username = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
 
-  if (!username || !email || !password) {
-    alert("Fill in every box!");
-    return;
-  }
+let username="";
+let isAdmin=false;
 
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
+const loginBox=document.getElementById("loginBox");
+const appBox=document.getElementById("app");
+const welcome=document.getElementById("welcome");
+const profiles=document.getElementById("profiles");
 
-    await addDoc(collection(db, "users"), {
-      uid: cred.user.uid,
-      username: username
-    });
+document.getElementById("signup").onclick=async()=>{
+try{
+const user=await createUserWithEmailAndPassword(auth,email.value,password.value);
+await addDoc(collection(db,"users"),{uid:user.user.uid,username:username.value});
+alert("Account created!");
+}catch(e){alert(e.message)}
+};
 
-    alert("Account created! You can now log in.");
-  } catch (e) {
-    alert(e.message);
-  }
+document.getElementById("login").onclick=async()=>{
+try{await signInWithEmailAndPassword(auth,email.value,password.value)}catch(e){alert(e.message)}
+};
+
+document.getElementById("logout").onclick=()=>signOut(auth);
+
+onAuthStateChanged(auth,async(user)=>{
+if(!user){loginBox.style.display="block";appBox.style.display="none";return;}
+loginBox.style.display="none";appBox.style.display="block";
+isAdmin=user.email===ADMIN_EMAIL;
+const q=query(collection(db,"users"),where("uid","==",user.uid));
+const snap=await getDocs(q);
+username=snap.docs[0].data().username;
+welcome.innerHTML=`Welcome, ${username}${isAdmin?" 👑 Admin":""}`;
+loadProfiles();
 });
 
-// LOGIN
-document.getElementById("loginBtn").addEventListener("click", async () => {
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
-
-  try {
-    await signInWithEmailAndPassword(auth, email, password);
-    alert("Logged in!");
-  } catch (e) {
-    alert(e.message);
-  }
+document.getElementById("post").onclick=async()=>{
+await addDoc(collection(db,"profiles"),{
+name:username,
+owner:auth.currentUser.uid,
+age:Number(age.value),
+emoji:emoji.value,
+word1:word1.value,
+word2:word2.value,
+word3:word3.value,
+bio:bio.value,
+time:Date.now()
 });
+document.querySelectorAll("#app input, textarea").forEach(e=>e.value="");
+};
+
+function loadProfiles(){
+const q=query(collection(db,"profiles"),orderBy("time","desc"));
+onSnapshot(q,(s)=>{
+profiles.innerHTML="";
+s.forEach((p)=>{
+const d=p.data();
+profiles.innerHTML+=`<div class="card"><div class="top"><div class="avatar">${d.name[0]}</div><div><h2>${d.name}${isAdmin?"":""}</h2><div>${d.age} years old</div></div></div><p>${d.bio}</p><div><span class="tag">${d.word1}</span><span class="tag">${d.word2}</span><span class="tag">${d.word3}</span></div><h2>${d.emoji}</h2>${(d.owner===auth.currentUser.uid||isAdmin)?`<button class="delete" onclick="window.del('${p.id}')">🗑 Delete</button>`:""}</div>`;
+});
+});
+}
+
+window.del=async(id)=>{
+if(confirm("Delete this profile?")) await deleteDoc(doc(db,"profiles",id));
+};
 </script>
 </body>
 </html>
