@@ -304,7 +304,8 @@ const auth = getAuth(app);
 let currentUsername = "";
 let isAdmin = false;
 let selectedUser = null;
-
+let chatUnsubscribe = null;
+  
 const loginBox = document.getElementById("loginBox");
 const appBox = document.getElementById("app");
 const welcome = document.getElementById("welcome");
@@ -536,44 +537,46 @@ function loadUsers(){
 
 }
 
+
 // OPEN CHAT
-function openChat(uid,name){
+function openChat(uid, name){
 
-  selectedUser = {uid,name};
+  selectedUser = { uid, name };
 
-  chat.innerHTML=`<p style="color:#9af5a8">
-  Chatting with <b>${name}</b></p>`;
+  // Stop listening to the old chat
+  if(chatUnsubscribe){
+    chatUnsubscribe();
+  }
 
-  const q=query(collection(db,"messages"),orderBy("created"));
+  const q = query(collection(db,"messages"), orderBy("created"));
 
-  onSnapshot(q,(snapshot)=>{
+  chatUnsubscribe = onSnapshot(q, (snapshot)=>{
 
-    chat.innerHTML=`<p style="color:#9af5a8">
-    Chatting with <b>${name}</b></p>`;
+    chat.innerHTML = `
+      <p style="color:#9af5a8;margin-bottom:10px;">
+        Chatting with <b>${name}</b>
+      </p>
+    `;
 
     snapshot.forEach((m)=>{
 
-      const d=m.data();
+      const d = m.data();
 
-      const valid=
-      (d.fromUid===auth.currentUser.uid&&d.toUid===uid)||
-      (d.fromUid===uid&&d.toUid===auth.currentUser.uid);
+      const valid =
+        (d.fromUid === auth.currentUser.uid && d.toUid === uid) ||
+        (d.fromUid === uid && d.toUid === auth.currentUser.uid);
 
-      if(!valid)return;
+      if(!valid) return;
 
-      chat.innerHTML+=`
-
-      <div class="msg ${d.fromUid===auth.currentUser.uid?"me":"them"}">
-
-      ${d.text}
-
-      </div>
-
+      chat.innerHTML += `
+        <div class="msg ${d.fromUid===auth.currentUser.uid?"me":"them"}">
+          ${d.text}
+        </div>
       `;
 
     });
 
-    chat.scrollTop=chat.scrollHeight;
+    chat.scrollTop = chat.scrollHeight;
 
   });
 
