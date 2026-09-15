@@ -521,14 +521,13 @@ function loadUsers(){
     snapshot.forEach((u)=>{
 
       const d = u.data();
-
       if(d.uid === auth.currentUser.uid) return;
 
       const btn = document.createElement("div");
       btn.className = "userBtn";
-      btn.textContent = "🐵 " + d.username;
+      btn.innerHTML = `🐵 ${d.username}`;
 
-      btn.onclick = () => openChat(d.uid, d.username);
+      btn.onclick = () => window.openChat(d.uid, d.username);
 
       userList.appendChild(btn);
 
@@ -537,12 +536,8 @@ function loadUsers(){
   });
 
 }
-
-
 // OPEN CHAT
-let chatUnsubscribe = null;
-
-function openChat(uid, name){
+window.openChat = function(uid, name){
 
   selectedUser = { uid, name };
 
@@ -583,7 +578,7 @@ function openChat(uid, name){
 
   });
 
-}
+};
 </script>
 
 </body>
