@@ -249,6 +249,7 @@ button{
 
       <div id="userList" class="users"></div>
 
+      <div id="chatHeader"></div>
       <div id="chat"></div>
 
       <textarea id="msgInput" placeholder="Type a message..."></textarea>
@@ -539,11 +540,17 @@ function loadUsers(){
 
 
 // OPEN CHAT
+let chatUnsubscribe = null;
+
 function openChat(uid, name){
 
   selectedUser = { uid, name };
 
-  // Stop listening to the old chat
+  document.getElementById("chatHeader").innerHTML =
+    `<p style="color:#9af5a8;margin-bottom:10px;">
+      Chatting with <b>${name}</b>
+    </p>`;
+
   if(chatUnsubscribe){
     chatUnsubscribe();
   }
@@ -552,11 +559,7 @@ function openChat(uid, name){
 
   chatUnsubscribe = onSnapshot(q, (snapshot)=>{
 
-    chat.innerHTML = `
-      <p style="color:#9af5a8;margin-bottom:10px;">
-        Chatting with <b>${name}</b>
-      </p>
-    `;
+    chat.innerHTML = "";
 
     snapshot.forEach((m)=>{
 
@@ -568,11 +571,11 @@ function openChat(uid, name){
 
       if(!valid) return;
 
-      chat.innerHTML += `
-        <div class="msg ${d.fromUid===auth.currentUser.uid?"me":"them"}">
-          ${d.text}
-        </div>
-      `;
+      const div = document.createElement("div");
+      div.className = `msg ${d.fromUid===auth.currentUser.uid ? "me" : "them"}`;
+      div.textContent = d.text;
+
+      chat.appendChild(div);
 
     });
 
@@ -581,36 +584,6 @@ function openChat(uid, name){
   });
 
 }
-
-// SEND MESSAGE
-document.getElementById("send").onclick = async () => {
-
-  if (!selectedUser) {
-    alert("Choose someone first!");
-    return;
-  }
-
-  const text = document.getElementById("msgInput").value.trim();
-  if (!text) return;
-
-  try {
-    await addDoc(collection(db, "messages"), {
-      fromUid: auth.currentUser.uid,
-      fromName: currentUsername,
-      toUid: selectedUser.uid,
-      toName: selectedUser.name,
-      text: text,
-      created: Date.now()
-    });
-
-    document.getElementById("msgInput").value = "";
-
-  } catch (err) {
-    alert(err.message);
-    console.error(err);
-  }
-
-};
 </script>
 
 </body>
