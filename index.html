@@ -3,161 +3,41 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Very Tuff</title>
+<title>MONKS</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-
-body{
-background:linear-gradient(180deg,#b9e7ff 0%,#dff4ff 35%,#eef9ff 100%);
-color:#183b56;
-min-height:100vh;
-padding:24px;
-}
-
+body{background:linear-gradient(180deg,#1f3d29 0%,#2f5d3a 45%,#8bcf9c 100%);color:#eefaf0;min-height:100vh;padding:24px}
 .container{max-width:900px;margin:auto}
-
-h1{
-text-align:center;
-font-size:48px;
-color:#0284c7;
-margin-bottom:8px;
-text-shadow:0 6px 18px rgba(2,132,199,.18);
-}
-
-.sub{
-text-align:center;
-color:#4b6b84;
-margin-bottom:28px;
-}
-
-.box{
-background:rgba(233,248,255,.88);
-backdrop-filter:blur(18px);
-border:2px solid #8ed8ff;
-border-radius:22px;
-padding:22px;
-margin-bottom:22px;
-box-shadow:0 12px 30px rgba(2,132,199,.10);
-}
-
-input,textarea{
-width:100%;
-padding:13px;
-margin:8px 0;
-border-radius:12px;
-border:2px solid #b8e6ff;
-background:#f6fcff;
-color:#0f172a;
-font-size:15px;
-}
-
-textarea{
-height:140px;
-resize:none;
-}
-
-input:focus,textarea:focus{
-outline:none;
-border-color:#38bdf8;
-box-shadow:0 0 0 4px rgba(56,189,248,.15);
-}
-
-button{
-width:100%;
-padding:13px;
-margin-top:10px;
-border:none;
-border-radius:12px;
-background:linear-gradient(135deg,#38bdf8,#0ea5e9);
-color:white;
-font-weight:700;
-cursor:pointer;
-}
-
+h1{text-align:center;font-size:52px;color:#d8ffe0;letter-spacing:2px;text-shadow:0 8px 30px rgba(0,0,0,.35)}
+.sub{text-align:center;color:#d7f5dc;margin:8px 0 30px;font-size:15px}
+.box{background:rgba(255,255,255,.08);backdrop-filter:blur(18px);border:1px solid rgba(180,255,196,.18);border-radius:24px;padding:22px;margin-bottom:22px;box-shadow:0 20px 40px rgba(0,0,0,.22)}
+input,textarea{width:100%;padding:13px;margin:8px 0;border-radius:14px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.10);color:white;font-size:15px}
+input::placeholder,textarea::placeholder{color:#cce8d1}
+input:focus,textarea:focus{outline:none;border-color:#8be28f;box-shadow:0 0 0 4px rgba(139,226,143,.18)}
+textarea{height:140px;resize:none}
+button{width:100%;padding:13px;margin-top:10px;border:none;border-radius:14px;background:linear-gradient(135deg,#58b66a,#2e8b57);color:white;font-weight:700;cursor:pointer}
 button:hover{transform:translateY(-2px)}
-
-.secondary{
-background:#d6f0ff;
-color:#0369a1;
-}
-
-.card{
-background:linear-gradient(180deg,#f5fcff,#ecf8ff);
-border:2px solid #9edcff;
-border-radius:22px;
-padding:20px;
-margin-bottom:18px;
-box-shadow:0 10px 22px rgba(14,165,233,.08);
-}
-
-.header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:12px;
-}
-
-.user{
-font-weight:700;
-font-size:17px;
-color:#0369a1;
-}
-
-.time{
-font-size:13px;
-color:#64748b;
-}
-
-.title{
-font-size:26px;
-font-weight:700;
-color:#0f172a;
-margin:10px 0;
-}
-
-.content{
-font-size:16px;
-line-height:1.6;
-color:#334155;
-white-space:pre-wrap;
-}
-
-.delete{
-background:#e5f4ff;
-color:#64748b;
-border:1px solid #b8dff5;
-margin-top:18px;
-}
-
-.delete:hover{
-background:#d6edff;
-}
-
-#app{display:none}
+.secondary{background:rgba(255,255,255,.12)}
+.card{background:rgba(22,55,32,.82);border:1px solid rgba(139,226,143,.20);border-radius:22px;padding:20px;margin-bottom:18px;box-shadow:0 12px 28px rgba(0,0,0,.25)}
+.header{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.user{font-weight:700;font-size:17px;color:#9af5a8}.time{font-size:13px;color:#bddfc5}.title{font-size:26px;font-weight:700;color:#fff;margin:10px 0}.content{font-size:16px;line-height:1.6;color:#e4f6e7;white-space:pre-wrap}.delete{background:#2d4735;color:#d6e9d9;border:1px solid rgba(255,255,255,.08);margin-top:18px}#app{display:none}
 </style>
 </head>
-
 <body>
-
 <div class="container">
-
-<h1>🔥 VERY TUFF</h1>
-<p class="sub">Share anything with the community.</p>
+<h1>🐒 MONKS</h1>
+<p class="sub">The jungle's community feed.</p>
 
 <div id="loginBox" class="box">
 <h2>Login / Sign Up</h2>
-
-<input id="username" placeholder="Username (only for sign up)">
+<input id="username" placeholder="Username (sign up only)">
 <input id="email" placeholder="Email">
 <input id="password" type="password" placeholder="Password">
-
 <button id="signup">Create Account</button>
 <button id="login" class="secondary">Login</button>
 </div>
 
 <div id="app">
-
 <div class="box">
 <h2 id="welcome"></h2>
 <button id="logout" class="secondary">Logout</button>
@@ -165,226 +45,38 @@ background:#d6edff;
 
 <div class="box">
 <h2>Create Post</h2>
-
 <input id="title" placeholder="Post title...">
-
-<textarea id="text" placeholder="What's on your mind?"></textarea>
-
+<textarea id="text" placeholder="What's happening in the jungle?"></textarea>
 <button id="post">Post</button>
 </div>
 
 <div id="posts"></div>
-
 </div>
-
 </div>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
-import {
-getFirestore,
-collection,
-addDoc,
-query,
-orderBy,
-onSnapshot,
-deleteDoc,
-doc,
-getDocs,
-where
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getFirestore, collection, addDoc, query, orderBy, onSnapshot, deleteDoc, doc, getDocs, where } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-import {
-getAuth,
-createUserWithEmailAndPassword,
-signInWithEmailAndPassword,
-onAuthStateChanged,
-signOut
-} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
-
-const firebaseConfig={
-apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-authDomain:"tuffmonkey-f75b3.firebaseapp.com",
-projectId:"tuffmonkey-f75b3",
-storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
-messagingSenderId:"897150250440",
-appId:"1:897150250440:web:8a668c17d28074fad264fd"
-};
-
+const firebaseConfig={apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",authDomain:"tuffmonkey-f75b3.firebaseapp.com",projectId:"tuffmonkey-f75b3",storageBucket:"tuffmonkey-f75b3.firebasestorage.app",messagingSenderId:"897150250440",appId:"1:897150250440:web:8a668c17d28074fad264fd"};
 const ADMIN_EMAIL="monkeymen0706@gmail.com";
+const app=initializeApp(firebaseConfig);const db=getFirestore(app);const auth=getAuth(app);
+let currentUsername="";let isAdmin=false;
+const loginBox=document.getElementById("loginBox");const appBox=document.getElementById("app");const welcome=document.getElementById("welcome");const posts=document.getElementById("posts");
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-const auth=getAuth(app);
+document.getElementById("signup").onclick=async()=>{const u=document.getElementById("username").value.trim(),e=document.getElementById("email").value.trim(),p=document.getElementById("password").value;if(!u||!e||!p)return alert("Fill every box!");try{const user=await createUserWithEmailAndPassword(auth,e,p);await addDoc(collection(db,"users"),{uid:user.user.uid,username:u});alert("Welcome to MONKS 🐒");}catch(err){alert(err.message)}};
 
-let currentUsername="";
-let isAdmin=false;
+document.getElementById("login").onclick=async()=>{try{await signInWithEmailAndPassword(auth,document.getElementById("email").value.trim(),document.getElementById("password").value)}catch(err){alert(err.message)}};
 
-const loginBox=document.getElementById("loginBox");
-const appBox=document.getElementById("app");
-const welcome=document.getElementById("welcome");
-const posts=document.getElementById("posts");
-
-// SIGN UP
-document.getElementById("signup").onclick=async()=>{
-
-const username=document.getElementById("username").value.trim();
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-
-if(!username||!email||!password){
-alert("Fill in every box!");
-return;
-}
-
-try{
-const user=await createUserWithEmailAndPassword(auth,email,password);
-
-await addDoc(collection(db,"users"),{
-uid:user.user.uid,
-username:username
-});
-
-alert("Account created! 🎉");
-}catch(e){
-alert(e.message);
-}
-
-};
-
-// LOGIN
-document.getElementById("login").onclick=async()=>{
-
-const email=document.getElementById("email").value.trim();
-const password=document.getElementById("password").value;
-
-try{
-await signInWithEmailAndPassword(auth,email,password);
-}catch(e){
-alert(e.message);
-}
-
-};
-
-// LOGOUT
 document.getElementById("logout").onclick=()=>signOut(auth);
 
-// AUTH
-onAuthStateChanged(auth,async(user)=>{
+onAuthStateChanged(auth,async(user)=>{if(!user){loginBox.style.display="block";appBox.style.display="none";return;}loginBox.style.display="none";appBox.style.display="block";isAdmin=user.email===ADMIN_EMAIL;const q=query(collection(db,"users"),where("uid","==",user.uid));const snap=await getDocs(q);currentUsername=snap.docs[0].data().username;welcome.innerHTML=`🐒 Welcome back, ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;loadPosts();});
 
-if(!user){
-loginBox.style.display="block";
-appBox.style.display="none";
-return;
-}
+document.getElementById("post").onclick=async()=>{const title=document.getElementById("title").value.trim(),text=document.getElementById("text").value.trim();if(!title||!text)return alert("Write a title and some text!");await addDoc(collection(db,"posts"),{username:currentUsername,owner:auth.currentUser.uid,title,text,created:Date.now()});document.getElementById("title").value="";document.getElementById("text").value="";};
 
-loginBox.style.display="none";
-appBox.style.display="block";
-
-isAdmin=user.email===ADMIN_EMAIL;
-
-const q=query(collection(db,"users"),where("uid","==",user.uid));
-const snap=await getDocs(q);
-
-currentUsername=snap.docs[0].data().username;
-
-welcome.innerHTML=`Welcome, ${currentUsername}${isAdmin?" 👑 Admin":""}`;
-
-loadPosts();
-
-});
-
-// CREATE POST
-document.getElementById("post").onclick=async()=>{
-
-const title=document.getElementById("title").value.trim();
-const text=document.getElementById("text").value.trim();
-
-if(!title||!text){
-alert("Write a title and some text!");
-return;
-}
-
-await addDoc(collection(db,"posts"),{
-
-username:currentUsername,
-owner:auth.currentUser.uid,
-title,
-text,
-created:Date.now()
-
-});
-
-document.getElementById("title").value="";
-document.getElementById("text").value="";
-
-};
-
-// LOAD POSTS
-function loadPosts(){
-
-const q=query(collection(db,"posts"),orderBy("created","desc"));
-
-onSnapshot(q,(snapshot)=>{
-
-posts.innerHTML="";
-
-snapshot.forEach((post)=>{
-
-const d=post.data();
-
-const time=new Date(d.created).toLocaleString("en-NZ",{
-day:"numeric",
-month:"short",
-year:"numeric",
-hour:"numeric",
-minute:"2-digit"
-});
-
-posts.innerHTML+=`
-
-<div class="card">
-
-<div class="header">
-
-<div class="user">${d.username}</div>
-
-<div class="time">${time}</div>
-
-</div>
-
-<div class="title">${d.title}</div>
-
-<div class="content">${d.text}</div>
-
-${(d.owner===auth.currentUser.uid||isAdmin)?`
-
-<button class="delete" onclick="window.del('${post.id}')">
-🗑 Delete Post
-</button>
-
-`:""}
-
-</div>
-
-`;
-
-});
-
-});
-
-}
-
-window.del=async(id)=>{
-
-if(confirm("Delete this post?")){
-await deleteDoc(doc(db,"posts",id));
-}
-
-};
-
+function loadPosts(){const q=query(collection(db,"posts"),orderBy("created","desc"));onSnapshot(q,s=>{posts.innerHTML="";s.forEach(post=>{const d=post.data();const t=new Date(d.created).toLocaleString("en-NZ",{day:"numeric",month:"short",year:"numeric",hour:"numeric",minute:"2-digit"});posts.innerHTML+=`<div class="card"><div class="header"><div class="user">🐵 ${d.username}</div><div class="time">${t}</div></div><div class="title">${d.title}</div><div class="content">${d.text}</div>${(d.owner===auth.currentUser.uid||isAdmin)?`<button class="delete" onclick="window.del('${post.id}')">🗑 Delete Post</button>`:""}</div>`})})}
+window.del=async(id)=>{if(confirm("Delete this post?"))await deleteDoc(doc(db,"posts",id));};
 </script>
-
 </body>
 </html>
