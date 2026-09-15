@@ -525,9 +525,9 @@ function loadUsers(){
 
       const btn = document.createElement("div");
       btn.className = "userBtn";
-      btn.innerHTML = `🐵 ${d.username}`;
+      btn.textContent = "🐵 " + d.username;
 
-      btn.onclick = () => window.openChat(d.uid, d.username);
+      btn.onclick = () => openChat(d.uid, d.username);
 
       userList.appendChild(btn);
 
@@ -537,7 +537,7 @@ function loadUsers(){
 
 }
 // OPEN CHAT
-window.openChat = function(uid, name){
+function openChat(uid, name){
 
   selectedUser = { uid, name };
 
@@ -578,6 +578,28 @@ window.openChat = function(uid, name){
 
   });
 
+}
+  // SEND MESSAGE
+document.getElementById("send").onclick = async () => {
+
+  if(!selectedUser){
+    alert("Choose someone first!");
+    return;
+  }
+
+  const text = document.getElementById("msgInput").value.trim();
+  if(!text) return;
+
+  await addDoc(collection(db,"messages"),{
+    fromUid: auth.currentUser.uid,
+    fromName: currentUsername,
+    toUid: selectedUser.uid,
+    toName: selectedUser.name,
+    text,
+    created: Date.now()
+  });
+
+  document.getElementById("msgInput").value = "";
 };
 </script>
 
