@@ -581,32 +581,31 @@ function openChat(uid,name){
 }
 
 // SEND MESSAGE
-document.getElementById("send").onclick=async()=>{
+document.getElementById("send").onclick = async () => {
 
-  if(!selectedUser){
+  if (!selectedUser) {
     alert("Choose someone first!");
     return;
   }
 
-  const text=document.getElementById("msgInput").value.trim();
+  const text = document.getElementById("msgInput").value.trim();
+  if (!text) return;
 
-  if(!text)return;
+  try {
+    await addDoc(collection(db, "messages"), {
+      fromUid: auth.currentUser.uid,
+      fromName: currentUsername,
+      toUid: selectedUser.uid,
+      toName: selectedUser.name,
+      text: text,
+      created: Date.now()
+    });
 
-  await addDoc(collection(db,"messages"),{
+    document.getElementById("msgInput").value = "";
 
-    fromUid:auth.currentUser.uid,
-    fromName:currentUsername,
-
-    toUid:selectedUser.uid,
-    toName:selectedUser.name,
-
-    text,
-    created:Date.now()
-
-  });
-
-  document.getElementById("msgInput").value="";
+  } catch (err) {
+    alert(err.message);
+    console.error(err);
+  }
 
 };
-
-</script>
