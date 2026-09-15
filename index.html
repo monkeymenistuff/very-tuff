@@ -15,65 +15,84 @@ body{
   padding:24px;
 }
 
-.container{max-width:900px;margin:auto}
+.container{max-width:920px;margin:auto}
 
 h1{
   text-align:center;
   font-size:52px;
   color:#d8ffe0;
   letter-spacing:2px;
-  text-shadow:0 8px 30px rgba(0,0,0,.35);
 }
 
 .sub{
   text-align:center;
   color:#d7f5dc;
-  margin:8px 0 30px;
+  margin:8px 0 28px;
 }
 
 .box{
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(18px);
-  border:1px solid rgba(180,255,196,.18);
-  border-radius:24px;
-  padding:22px;
-  margin-bottom:22px;
-  box-shadow:0 20px 40px rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:22px;
+  padding:20px;
+  margin-bottom:18px;
 }
 
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:20px;
+  margin-bottom:18px;
 }
 
 .welcome{
+  font-weight:700;
   font-size:18px;
-  font-weight:600;
-  color:#d8ffe0;
 }
 
 .logoutBtn{
   width:auto;
-  padding:10px 18px;
-  margin:0;
+  padding:10px 16px;
   border:none;
-  border-radius:12px;
+  border-radius:10px;
   background:rgba(255,255,255,.12);
   color:white;
   cursor:pointer;
+}
+
+.nav{
+  display:flex;
+  background:rgba(255,255,255,.08);
+  border-radius:999px;
+  padding:5px;
+  margin-bottom:18px;
+}
+
+.navBtn{
+  flex:1;
+  border:none;
+  background:transparent;
+  color:#d7f5dc;
+  padding:12px;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.navBtn.active{
+  background:#58b66a;
+  color:white;
 }
 
 input,textarea{
   width:100%;
   padding:13px;
   margin:8px 0;
-  border-radius:14px;
-  border:1px solid rgba(255,255,255,.08);
+  border-radius:12px;
+  border:none;
   background:rgba(255,255,255,.10);
   color:white;
-  font-size:15px;
 }
 
 input::placeholder,
@@ -81,28 +100,21 @@ textarea::placeholder{
   color:#cce8d1;
 }
 
-input:focus,
-textarea:focus{
-  outline:none;
-  border-color:#8be28f;
-  box-shadow:0 0 0 4px rgba(139,226,143,.18);
-}
-
 textarea{
-  height:140px;
   resize:none;
+  height:130px;
 }
 
 button{
   width:100%;
-  padding:13px;
-  margin-top:10px;
+  padding:12px;
   border:none;
-  border-radius:14px;
-  background:linear-gradient(135deg,#58b66a,#2e8b57);
+  border-radius:12px;
+  background:#58b66a;
   color:white;
   font-weight:700;
   cursor:pointer;
+  margin-top:8px;
 }
 
 .secondary{
@@ -111,24 +123,20 @@ button{
 
 .card{
   background:rgba(22,55,32,.82);
-  border:1px solid rgba(139,226,143,.20);
-  border-radius:22px;
-  padding:20px;
-  margin-bottom:18px;
-  box-shadow:0 12px 28px rgba(0,0,0,.25);
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:14px;
 }
 
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
-  margin-bottom:12px;
 }
 
 .user{
   color:#9af5a8;
   font-weight:700;
-  font-size:17px;
 }
 
 .time{
@@ -137,26 +145,55 @@ button{
 }
 
 .title{
-  font-size:26px;
-  color:white;
+  font-size:24px;
   font-weight:700;
   margin:10px 0;
 }
 
 .content{
-  color:#e4f6e7;
-  line-height:1.6;
   white-space:pre-wrap;
+  line-height:1.6;
 }
 
 .delete{
-  background:#2d4735;
-  color:#d6e9d9;
-  border:1px solid rgba(255,255,255,.08);
-  margin-top:18px;
+  background:#324d39;
+  margin-top:14px;
 }
 
-#app{display:none}
+.users{
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  margin-bottom:12px;
+}
+
+.userBtn{
+  background:rgba(255,255,255,.08);
+  padding:12px;
+  border-radius:10px;
+  cursor:pointer;
+}
+
+.msg{
+  max-width:72%;
+  padding:10px 14px;
+  border-radius:16px;
+  margin:8px 0;
+}
+
+.me{
+  background:#58b66a;
+  margin-left:auto;
+}
+
+.them{
+  background:#355c41;
+}
+
+#app,
+#dmPage{
+  display:none;
+}
 </style>
 </head>
 
@@ -185,24 +222,50 @@ button{
     <button id="logout" class="logoutBtn">Logout</button>
   </div>
 
-  <div class="box">
-    <h2>Create Post</h2>
-
-    <input id="title" placeholder="Post title...">
-
-    <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
-
-    <button id="post">Post</button>
+  <div class="nav">
+    <button id="postsTab" class="navBtn active">🌍 Public</button>
+    <button id="dmTab" class="navBtn">💬 DMs</button>
   </div>
 
-  <div id="posts"></div>
+  <div id="postsPage">
+
+    <div class="box">
+      <h2>Create Post</h2>
+
+      <input id="title" placeholder="Post title...">
+      <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
+
+      <button id="post">Post</button>
+    </div>
+
+    <div id="posts"></div>
+
+  </div>
+
+  <div id="dmPage">
+
+    <div class="box">
+      <h2>Direct Messages</h2>
+
+      <div id="userList" class="users"></div>
+
+      <div id="chat"></div>
+
+      <textarea id="msgInput" placeholder="Type a message..."></textarea>
+
+      <button id="send">Send</button>
+    </div>
+
+  </div>
 
 </div>
 
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
 import {
   getFirestore,
   collection,
@@ -224,7 +287,7 @@ import {
   signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-const firebaseConfig={
+const firebaseConfig = {
   apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
   authDomain:"tuffmonkey-f75b3.firebaseapp.com",
   projectId:"tuffmonkey-f75b3",
@@ -233,33 +296,40 @@ const firebaseConfig={
   appId:"1:897150250440:web:8a668c17d28074fad264fd"
 };
 
-const ADMIN_EMAIL="monkeymen0706@gmail.com";
+const ADMIN_EMAIL = "monkeymen0706@gmail.com";
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-const auth=getAuth(app);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const auth = getAuth(app);
 
-let currentUsername="";
-let isAdmin=false;
+let currentUsername = "";
+let isAdmin = false;
+let selectedUser = null;
 
-const loginBox=document.getElementById("loginBox");
-const appBox=document.getElementById("app");
-const welcome=document.getElementById("welcome");
-const posts=document.getElementById("posts");
+const loginBox = document.getElementById("loginBox");
+const appBox = document.getElementById("app");
+const welcome = document.getElementById("welcome");
+const posts = document.getElementById("posts");
+const userList = document.getElementById("userList");
+const chat = document.getElementById("chat");
 
-document.getElementById("signup").onclick=async()=>{
+const postsPage = document.getElementById("postsPage");
+const dmPage = document.getElementById("dmPage");
+  // SIGN UP
+document.getElementById("signup").onclick = async () => {
 
-  const username=document.getElementById("username").value.trim();
-  const email=document.getElementById("email").value.trim();
-  const password=document.getElementById("password").value;
+  const username = document.getElementById("username").value.trim();
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value;
 
-  if(!username||!email||!password){
+  if(!username || !email || !password){
     alert("Fill every box!");
     return;
   }
 
   try{
-    const user=await createUserWithEmailAndPassword(auth,email,password);
+
+    const user = await createUserWithEmailAndPassword(auth,email,password);
 
     await addDoc(collection(db,"users"),{
       uid:user.user.uid,
@@ -267,13 +337,15 @@ document.getElementById("signup").onclick=async()=>{
     });
 
     alert("Welcome to MONKS 🐒");
+
   }catch(err){
     alert(err.message);
   }
 
 };
 
-document.getElementById("login").onclick=async()=>{
+// LOGIN
+document.getElementById("login").onclick = async () => {
 
   try{
     await signInWithEmailAndPassword(
@@ -287,9 +359,11 @@ document.getElementById("login").onclick=async()=>{
 
 };
 
-document.getElementById("logout").onclick=()=>signOut(auth);
+// LOGOUT
+document.getElementById("logout").onclick = ()=> signOut(auth);
 
-onAuthStateChanged(auth,async(user)=>{
+// AUTH
+onAuthStateChanged(auth, async(user)=>{
 
   if(!user){
     loginBox.style.display="block";
@@ -300,35 +374,62 @@ onAuthStateChanged(auth,async(user)=>{
   loginBox.style.display="none";
   appBox.style.display="block";
 
-  isAdmin=user.email===ADMIN_EMAIL;
+  isAdmin = user.email === ADMIN_EMAIL;
 
-  const q=query(collection(db,"users"),where("uid","==",user.uid));
-  const snap=await getDocs(q);
+  const snap = await getDocs(
+    query(collection(db,"users"),where("uid","==",user.uid))
+  );
 
-  currentUsername=snap.docs[0].data().username;
+  currentUsername = snap.docs[0].data().username;
 
-  welcome.innerHTML=`🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
+  welcome.innerHTML =
+    `🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
 
   loadPosts();
+  loadUsers();
 
 });
 
-document.getElementById("post").onclick=async()=>{
+// TAB SWITCHING
+document.getElementById("postsTab").onclick=()=>{
+
+  postsPage.style.display="block";
+  dmPage.style.display="none";
+
+  document.getElementById("postsTab").classList.add("active");
+  document.getElementById("dmTab").classList.remove("active");
+
+};
+
+document.getElementById("dmTab").onclick=()=>{
+
+  postsPage.style.display="none";
+  dmPage.style.display="block";
+
+  document.getElementById("dmTab").classList.add("active");
+  document.getElementById("postsTab").classList.remove("active");
+
+};
+
+// CREATE POST
+document.getElementById("post").onclick = async()=>{
 
   const title=document.getElementById("title").value.trim();
   const text=document.getElementById("text").value.trim();
 
   if(!title||!text){
-    alert("Write a title and some text!");
+    alert("Write something!");
     return;
   }
 
   await addDoc(collection(db,"posts"),{
+
     username:currentUsername,
     owner:auth.currentUser.uid,
     title,
     text,
     created:Date.now()
+
   });
 
   document.getElementById("title").value="";
@@ -336,6 +437,7 @@ document.getElementById("post").onclick=async()=>{
 
 };
 
+// LOAD POSTS
 function loadPosts(){
 
   const q=query(collection(db,"posts"),orderBy("created","desc"));
@@ -351,17 +453,20 @@ function loadPosts(){
       const time=new Date(d.created).toLocaleString("en-NZ",{
         day:"numeric",
         month:"short",
-        year:"numeric",
         hour:"numeric",
         minute:"2-digit"
       });
 
       posts.innerHTML+=`
+
       <div class="card">
 
         <div class="header">
+
           <div class="user">🐵 ${d.username}</div>
+
           <div class="time">${time}</div>
+
         </div>
 
         <div class="title">${d.title}</div>
@@ -369,12 +474,18 @@ function loadPosts(){
         <div class="content">${d.text}</div>
 
         ${(d.owner===auth.currentUser.uid||isAdmin)?`
-          <button class="delete" onclick="window.del('${post.id}')">
-            🗑 Delete Post
-          </button>
+
+        <button class="delete"
+        onclick="window.del('${post.id}')">
+
+        🗑 Delete
+
+        </button>
+
         `:""}
 
       </div>
+
       `;
 
     });
@@ -383,11 +494,117 @@ function loadPosts(){
 
 }
 
+// DELETE POST
 window.del=async(id)=>{
+
   if(confirm("Delete this post?")){
+
     await deleteDoc(doc(db,"posts",id));
+
   }
+
 };
+
+// LOAD USERS
+async function loadUsers(){
+
+  const snap=await getDocs(collection(db,"users"));
+
+  userList.innerHTML="";
+
+  snap.forEach((u)=>{
+
+    const d=u.data();
+
+    if(d.uid===auth.currentUser.uid)return;
+
+    userList.innerHTML+=`
+
+      <div class="userBtn"
+      onclick="window.openChat('${d.uid}','${d.username}')">
+
+      🐵 ${d.username}
+
+      </div>
+
+    `;
+
+  });
+
+}
+
+// OPEN CHAT
+window.openChat=(uid,name)=>{
+
+  selectedUser={uid,name};
+
+  chat.innerHTML=`<p style="color:#9af5a8">
+  Chatting with <b>${name}</b></p>`;
+
+  const q=query(collection(db,"messages"),orderBy("created"));
+
+  onSnapshot(q,(snapshot)=>{
+
+    chat.innerHTML=`<p style="color:#9af5a8">
+    Chatting with <b>${name}</b></p>`;
+
+    snapshot.forEach((m)=>{
+
+      const d=m.data();
+
+      const valid=
+      (d.fromUid===auth.currentUser.uid&&d.toUid===uid)||
+      (d.fromUid===uid&&d.toUid===auth.currentUser.uid);
+
+      if(!valid)return;
+
+      chat.innerHTML+=`
+
+      <div class="msg ${d.fromUid===auth.currentUser.uid?"me":"them"}">
+
+      ${d.text}
+
+      </div>
+
+      `;
+
+    });
+
+    chat.scrollTop=chat.scrollHeight;
+
+  });
+
+};
+
+// SEND MESSAGE
+document.getElementById("send").onclick=async()=>{
+
+  if(!selectedUser){
+    alert("Choose someone first!");
+    return;
+  }
+
+  const text=document.getElementById("msgInput").value.trim();
+
+  if(!text)return;
+
+  await addDoc(collection(db,"messages"),{
+
+    fromUid:auth.currentUser.uid,
+    fromName:currentUsername,
+
+    toUid:selectedUser.uid,
+    toName:selectedUser.name,
+
+    text,
+    created:Date.now()
+
+  });
+
+  document.getElementById("msgInput").value="";
+
+};
+
 </script>
 
 </body>
