@@ -582,13 +582,13 @@ function openChat(uid, name){
   // SEND MESSAGE
 document.getElementById("send").onclick = async () => {
 
-  if(!selectedUser){
+  if (!selectedUser) {
     alert("Choose someone first!");
     return;
   }
 
   const text = document.getElementById("msgInput").value.trim();
-  if(!text) return;
+  if (!text) return;
 
   await addDoc(collection(db,"messages"),{
     fromUid: auth.currentUser.uid,
@@ -600,8 +600,8 @@ document.getElementById("send").onclick = async () => {
   });
 
   document.getElementById("msgInput").value = "";
-};
-</script>
 
-</body>
-</html>
+  // Refresh the current chat automatically
+  openChat(selectedUser.uid, selectedUser.name);
+
+};
