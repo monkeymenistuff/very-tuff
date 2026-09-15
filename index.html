@@ -315,7 +315,8 @@ const chat = document.getElementById("chat");
 
 const postsPage = document.getElementById("postsPage");
 const dmPage = document.getElementById("dmPage");
-  // SIGN UP
+
+// SIGN UP
 document.getElementById("signup").onclick = async () => {
 
   const username = document.getElementById("username").value.trim();
@@ -505,38 +506,41 @@ window.del=async(id)=>{
 
 };
 
-// LOAD USERS
-async function loadUsers(){
+// ==========================
+// FIXED LOAD USERS
+// ==========================
+function loadUsers(){
 
-  const snap=await getDocs(collection(db,"users"));
+  const q = query(collection(db,"users"));
 
-  userList.innerHTML="";
+  onSnapshot(q,(snapshot)=>{
 
-  snap.forEach((u)=>{
+    userList.innerHTML = "";
 
-    const d=u.data();
+    snapshot.forEach((u)=>{
 
-    if(d.uid===auth.currentUser.uid)return;
+      const d = u.data();
 
-    userList.innerHTML+=`
+      if(d.uid === auth.currentUser.uid) return;
 
-      <div class="userBtn"
-      onclick="window.openChat('${d.uid}','${d.username}')">
+      const btn = document.createElement("div");
+      btn.className = "userBtn";
+      btn.textContent = "🐵 " + d.username;
 
-      🐵 ${d.username}
+      btn.onclick = () => openChat(d.uid, d.username);
 
-      </div>
+      userList.appendChild(btn);
 
-    `;
+    });
 
   });
 
 }
 
 // OPEN CHAT
-window.openChat=(uid,name)=>{
+function openChat(uid,name){
 
-  selectedUser={uid,name};
+  selectedUser = {uid,name};
 
   chat.innerHTML=`<p style="color:#9af5a8">
   Chatting with <b>${name}</b></p>`;
@@ -574,7 +578,7 @@ window.openChat=(uid,name)=>{
 
   });
 
-};
+}
 
 // SEND MESSAGE
 document.getElementById("send").onclick=async()=>{
@@ -606,6 +610,3 @@ document.getElementById("send").onclick=async()=>{
 };
 
 </script>
-
-</body>
-</html>
