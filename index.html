@@ -537,7 +537,7 @@ function loadUsers(){
 
 }
 // OPEN CHAT
-function openChat(uid, name){
+window.openChat = function(uid, name){
 
   selectedUser = { uid, name };
 
@@ -546,9 +546,8 @@ function openChat(uid, name){
       Chatting with <b>${name}</b>
     </p>`;
 
-  if(chatUnsubscribe){
-    chatUnsubscribe();
-  }
+  // Stop previous listener
+  if(chatUnsubscribe) chatUnsubscribe();
 
   const q = query(collection(db,"messages"), orderBy("created"));
 
@@ -560,17 +559,15 @@ function openChat(uid, name){
 
       const d = m.data();
 
-      const valid =
-        (d.fromUid === auth.currentUser.uid && d.toUid === uid) ||
-        (d.fromUid === uid && d.toUid === auth.currentUser.uid);
-
-      if(!valid) return;
-
-      const div = document.createElement("div");
-      div.className = `msg ${d.fromUid===auth.currentUser.uid ? "me" : "them"}`;
-      div.textContent = d.text;
-
-      chat.appendChild(div);
+      if(
+        (d.fromUid === auth.currentUser.uid && d.toUid === selectedUser.uid) ||
+        (d.fromUid === selectedUser.uid && d.toUid === auth.currentUser.uid)
+      ){
+        const div = document.createElement("div");
+        div.className = `msg ${d.fromUid===auth.currentUser.uid ? "me" : "them"}`;
+        div.textContent = d.text;
+        chat.appendChild(div);
+      }
 
     });
 
@@ -578,7 +575,7 @@ function openChat(uid, name){
 
   });
 
-}
+};
   // SEND MESSAGE
 document.getElementById("send").onclick = async () => {
 
