@@ -508,20 +508,16 @@ window.del=async(id)=>{
 
 };
 
-// ==========================
-// FIXED LOAD USERS
-// ==========================
+// LOAD USERS
 function loadUsers(){
 
-  const q = query(collection(db,"users"));
-
-  onSnapshot(q,(snapshot)=>{
+  onSnapshot(collection(db,"users"), (snapshot)=>{
 
     userList.innerHTML = "";
 
-    snapshot.forEach((u)=>{
+    snapshot.forEach((docSnap)=>{
 
-      const d = u.data();
+      const d = docSnap.data();
       if(d.uid === auth.currentUser.uid) return;
 
       const btn = document.createElement("div");
@@ -531,73 +527,63 @@ function loadUsers(){
       btn.onclick = () => window.openChat(d.uid, d.username);
 
       userList.appendChild(btn);
-
     });
-
   });
-
 }
+
 // OPEN CHAT
-window.openChat = (uid, name) => {
+window.openChat = function(uid, name){
 
   selectedUser = { uid, name };
-  currentChatId = uid;
+
+  const convoId = [auth.currentUser.uid, uid].sort().join("_");
 
   document.getElementById("chatHeader").innerHTML =
     `<p style="color:#9af5a8;margin-bottom:10px;">
       Chatting with <b>${name}</b>
     </p>`;
 
-  if (chatUnsubscribe) chatUnsubscribe();
+  if(chatUnsubscribe) chatUnsubscribe();
 
-  const q = query(collection(db, "messages"), orderBy("created"));
+  const q = query(
+    collection(db,"messages"),
+    where("conversationId","==",convoId),
+    orderBy("created")
+  );
 
-  chatUnsubscribe = onSnapshot(q, (snapshot) => {
-
-    // If user switched chats, ignore old listener
-    if (currentChatId !== uid) return;
+  chatUnsubscribe = onSnapshot(q,(snapshot)=>{
 
     chat.innerHTML = "";
 
-    snapshot.forEach((docSnap) => {
+    snapshot.forEach((docSnap)=>{
 
       const d = docSnap.data();
 
-      const mineToThem =
-        d.fromUid === auth.currentUser.uid &&
-        d.toUid === uid;
-
-      const themToMe =
-        d.fromUid === uid &&
-        d.toUid === auth.currentUser.uid;
-
-      if (!(mineToThem || themToMe)) return;
-
       const div = document.createElement("div");
-      div.className = "msg " + (mineToThem ? "me" : "them");
-      div.textContent = d.text;
+      div.className = "msg " +
+        (d.fromUid === auth.currentUser.uid ? "me" : "them");
 
+      div.textContent = d.text;
       chat.appendChild(div);
 
     });
 
     chat.scrollTop = chat.scrollHeight;
-
   });
-
 };
   // SEND MESSAGE
 document.getElementById("send").onclick = async () => {
 
-  if (!selectedUser) {
-    alert("Choose someone first!");
-    return;
-  }
+  if(!selectedUser) return;
 
   const text = document.getElementById("msgInput").value.trim();
-  if (!text) return;
+  if(!text) return;
 
-  await addDoc(collection(db, "messages"), {
+  const convoId =
+    [auth.currentUser.uid, selectedUser.uid].sort().join("_");
+
+  await addDoc(collection(db,"messages"),{
+    conversationId: convoId,
     fromUid: auth.currentUser.uid,
     fromName: currentUsername,
     toUid: selectedUser.uid,
