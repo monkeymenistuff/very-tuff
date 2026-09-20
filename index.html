@@ -537,7 +537,7 @@ function loadUsers(){
 
 }
 // OPEN CHAT
-window.openChat = function(uid, name){
+window.openChat = (uid, name) => {
 
   selectedUser = { uid, name };
 
@@ -546,35 +546,31 @@ window.openChat = function(uid, name){
       Chatting with <b>${name}</b>
     </p>`;
 
-  // Stop previous listener
-  if(chatUnsubscribe) chatUnsubscribe();
+  if (chatUnsubscribe) chatUnsubscribe();
 
-  const q = query(collection(db,"messages"), orderBy("created"));
+  const q = query(collection(db, "messages"), orderBy("created"));
 
-  chatUnsubscribe = onSnapshot(q, (snapshot)=>{
+  chatUnsubscribe = onSnapshot(q, (snapshot) => {
 
     chat.innerHTML = "";
 
-    snapshot.forEach((m)=>{
-
+    snapshot.forEach((m) => {
       const d = m.data();
 
-      if(
-        (d.fromUid === auth.currentUser.uid && d.toUid === selectedUser.uid) ||
-        (d.fromUid === selectedUser.uid && d.toUid === auth.currentUser.uid)
-      ){
-        const div = document.createElement("div");
-        div.className = `msg ${d.fromUid===auth.currentUser.uid ? "me" : "them"}`;
-        div.textContent = d.text;
-        chat.appendChild(div);
-      }
+      const isThisChat =
+        (d.fromUid === auth.currentUser.uid && d.toUid === uid) ||
+        (d.fromUid === uid && d.toUid === auth.currentUser.uid);
 
+      if (!isThisChat) return;
+
+      const div = document.createElement("div");
+      div.className = `msg ${d.fromUid === auth.currentUser.uid ? "me" : "them"}`;
+      div.textContent = d.text;
+      chat.appendChild(div);
     });
 
     chat.scrollTop = chat.scrollHeight;
-
   });
-
 };
   // SEND MESSAGE
 document.getElementById("send").onclick = async () => {
@@ -598,9 +594,7 @@ document.getElementById("send").onclick = async () => {
 
   document.getElementById("msgInput").value = "";
 
-// Refresh the current chat automatically
-window.openChat(selectedUser.uid, selectedUser.name);
-  
+
 };
 </script>
 </body>
