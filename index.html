@@ -527,7 +527,7 @@ function loadUsers(){
       btn.className = "userBtn";
       btn.textContent = "🐵 " + d.username;
 
-      btn.onclick = () => openChat(d.uid, d.username);
+      btn.onclick = () => window.openChat(d.uid, d.username);
 
       userList.appendChild(btn);
 
@@ -598,9 +598,9 @@ document.getElementById("send").onclick = async () => {
 
   document.getElementById("msgInput").value = "";
 
-  // Refresh the current chat automatically
-  openChat(selectedUser.uid, selectedUser.name);
-
+// Refresh the current chat automatically
+window.openChat(selectedUser.uid, selectedUser.name);
+  
 };
 </script>
 </body>
