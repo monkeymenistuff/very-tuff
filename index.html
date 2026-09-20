@@ -7,29 +7,15 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-
 body{
   background:linear-gradient(180deg,#1f3d29 0%,#2f5d3a 45%,#8bcf9c 100%);
   color:#eefaf0;
   min-height:100vh;
   padding:24px;
 }
-
 .container{max-width:920px;margin:auto}
-
-h1{
-  text-align:center;
-  font-size:52px;
-  color:#d8ffe0;
-  letter-spacing:2px;
-}
-
-.sub{
-  text-align:center;
-  color:#d7f5dc;
-  margin:8px 0 28px;
-}
-
+h1{text-align:center;font-size:52px;color:#d8ffe0;letter-spacing:2px}
+.sub{text-align:center;color:#d7f5dc;margin:8px 0 28px}
 .box{
   background:rgba(255,255,255,.08);
   backdrop-filter:blur(18px);
@@ -38,19 +24,13 @@ h1{
   padding:20px;
   margin-bottom:18px;
 }
-
 .topbar{
   display:flex;
   justify-content:space-between;
   align-items:center;
   margin-bottom:18px;
 }
-
-.welcome{
-  font-weight:700;
-  font-size:18px;
-}
-
+.welcome{font-weight:700;font-size:18px}
 .logoutBtn{
   width:auto;
   padding:10px 16px;
@@ -60,7 +40,24 @@ h1{
   color:white;
   cursor:pointer;
 }
-
+.nav{
+  display:flex;
+  background:rgba(255,255,255,.08);
+  border-radius:999px;
+  padding:5px;
+  margin-bottom:18px;
+}
+.navBtn{
+  flex:1;
+  border:none;
+  background:transparent;
+  color:#d7f5dc;
+  padding:12px;
+  border-radius:999px;
+  font-weight:700;
+  cursor:pointer;
+}
+.navBtn.active{background:#58b66a;color:white}
 input,textarea{
   width:100%;
   padding:13px;
@@ -70,17 +67,8 @@ input,textarea{
   background:rgba(255,255,255,.10);
   color:white;
 }
-
-input::placeholder,
-textarea::placeholder{
-  color:#cce8d1;
-}
-
-textarea{
-  resize:none;
-  height:130px;
-}
-
+input::placeholder,textarea::placeholder{color:#cce8d1}
+textarea{resize:none;height:130px}
 button{
   width:100%;
   padding:12px;
@@ -92,53 +80,24 @@ button{
   cursor:pointer;
   margin-top:8px;
 }
-
-.secondary{
-  background:rgba(255,255,255,.12);
-}
-
+.secondary{background:rgba(255,255,255,.12)}
 .card{
   background:rgba(22,55,32,.82);
   border-radius:18px;
   padding:18px;
   margin-bottom:14px;
 }
-
 .header{
   display:flex;
   justify-content:space-between;
   align-items:center;
 }
-
-.user{
-  color:#9af5a8;
-  font-weight:700;
-}
-
-.time{
-  color:#bddfc5;
-  font-size:13px;
-}
-
-.title{
-  font-size:24px;
-  font-weight:700;
-  margin:10px 0;
-}
-
-.content{
-  white-space:pre-wrap;
-  line-height:1.6;
-}
-
-.delete{
-  background:#324d39;
-  margin-top:14px;
-}
-
-#app{
-  display:none;
-}
+.user{color:#9af5a8;font-weight:700}
+.time{color:#bddfc5;font-size:13px}
+.title{font-size:24px;font-weight:700;margin:10px 0}
+.content{white-space:pre-wrap;line-height:1.6}
+.delete{background:#324d39;margin-top:14px}
+#app,#lovePage{display:none}
 </style>
 </head>
 
@@ -167,16 +126,40 @@ button{
     <button id="logout" class="logoutBtn">Logout</button>
   </div>
 
-  <div class="box">
-    <h2>Create Post</h2>
-
-    <input id="title" placeholder="Post title...">
-    <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
-
-    <button id="post">Post</button>
+  <div class="nav">
+    <button id="postsTab" class="navBtn active">🌍 Public</button>
+    <button id="loveTab" class="navBtn">❤️ Compatibility</button>
   </div>
 
-  <div id="posts"></div>
+  <div id="postsPage">
+
+    <div class="box">
+      <h2>Create Post</h2>
+
+      <input id="title" placeholder="Post title...">
+      <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
+
+      <button id="post">Post</button>
+    </div>
+
+    <div id="posts"></div>
+
+  </div>
+
+  <div id="lovePage">
+
+    <div class="box">
+      <h2>❤️ Compatibility Test</h2>
+
+      <input id="person1" placeholder="First username">
+      <input id="person2" placeholder="Second username">
+
+      <button id="testLove">Reveal Compatibility</button>
+
+      <div id="loveResult" style="text-align:center;margin-top:18px;"></div>
+    </div>
+
+  </div>
 
 </div>
 
@@ -208,7 +191,7 @@ import {
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
 const firebaseConfig = {
-  apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
+  apiKey:"YOUR_API_KEY",
   authDomain:"tuffmonkey-f75b3.firebaseapp.com",
   projectId:"tuffmonkey-f75b3",
   storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
@@ -216,35 +199,38 @@ const firebaseConfig = {
   appId:"1:897150250440:web:8a668c17d28074fad264fd"
 };
 
-const ADMIN_EMAIL = "monkeymen0706@gmail.com";
+const ADMIN_EMAIL="monkeymen0706@gmail.com";
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
-const auth = getAuth(app);
+const app=initializeApp(firebaseConfig);
+const db=getFirestore(app);
+const auth=getAuth(app);
 
-let currentUsername = "";
-let isAdmin = false;
+let currentUsername="";
+let isAdmin=false;
 
-const loginBox = document.getElementById("loginBox");
-const appBox = document.getElementById("app");
-const welcome = document.getElementById("welcome");
-const posts = document.getElementById("posts");
+const loginBox=document.getElementById("loginBox");
+const appBox=document.getElementById("app");
+const welcome=document.getElementById("welcome");
+const posts=document.getElementById("posts");
+
+const postsPage=document.getElementById("postsPage");
+const lovePage=document.getElementById("lovePage");
 
 // SIGN UP
-document.getElementById("signup").onclick = async () => {
+document.getElementById("signup").onclick=async()=>{
 
-  const username = document.getElementById("username").value.trim();
-  const email = document.getElementById("email").value.trim();
-  const password = document.getElementById("password").value;
+  const username=document.getElementById("username").value.trim();
+  const email=document.getElementById("email").value.trim();
+  const password=document.getElementById("password").value;
 
-  if(!username || !email || !password){
+  if(!username||!email||!password){
     alert("Fill every box!");
     return;
   }
 
   try{
 
-    const user = await createUserWithEmailAndPassword(auth,email,password);
+    const user=await createUserWithEmailAndPassword(auth,email,password);
 
     await addDoc(collection(db,"users"),{
       uid:user.user.uid,
@@ -260,7 +246,7 @@ document.getElementById("signup").onclick = async () => {
 };
 
 // LOGIN
-document.getElementById("login").onclick = async () => {
+document.getElementById("login").onclick=async()=>{
 
   try{
 
@@ -277,10 +263,10 @@ document.getElementById("login").onclick = async () => {
 };
 
 // LOGOUT
-document.getElementById("logout").onclick = () => signOut(auth);
+document.getElementById("logout").onclick=()=>signOut(auth);
 
 // AUTH
-onAuthStateChanged(auth, async(user)=>{
+onAuthStateChanged(auth,async(user)=>{
 
   if(!user){
     loginBox.style.display="block";
@@ -291,98 +277,95 @@ onAuthStateChanged(auth, async(user)=>{
   loginBox.style.display="none";
   appBox.style.display="block";
 
-  isAdmin = user.email === ADMIN_EMAIL;
+  isAdmin=user.email===ADMIN_EMAIL;
 
-  const snap = await getDocs(
-    query(collection(db,"users"), where("uid","==",user.uid))
+  const snap=await getDocs(
+    query(collection(db,"users"),where("uid","==",user.uid))
   );
 
-  currentUsername = snap.docs[0].data().username;
+  currentUsername=snap.docs[0].data().username;
 
-  welcome.innerHTML =
-    `🐒 ${currentUsername}${isAdmin ? " 👑 Alpha Monk" : ""}`;
+  welcome.innerHTML=`🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
 
   loadPosts();
 
 });
 
+// TAB SWITCHING
+postsTab.onclick=()=>{
+  postsPage.style.display="block";
+  lovePage.style.display="none";
+  postsTab.classList.add("active");
+  loveTab.classList.remove("active");
+};
+
+loveTab.onclick=()=>{
+  postsPage.style.display="none";
+  lovePage.style.display="block";
+  loveTab.classList.add("active");
+  postsTab.classList.remove("active");
+};
+
 // CREATE POST
-document.getElementById("post").onclick = async()=>{
+post.onclick=async()=>{
 
-  const title = document.getElementById("title").value.trim();
-  const text = document.getElementById("text").value.trim();
+  const title=document.getElementById("title").value.trim();
+  const text=document.getElementById("text").value.trim();
 
-  if(!title || !text){
+  if(!title||!text){
     alert("Write something!");
     return;
   }
 
   await addDoc(collection(db,"posts"),{
-
-    username: currentUsername,
-    owner: auth.currentUser.uid,
+    username:currentUsername,
+    owner:auth.currentUser.uid,
     title,
     text,
-    created: Date.now()
-
+    created:Date.now()
   });
 
-  document.getElementById("title").value = "";
-  document.getElementById("text").value = "";
-
+  title.value="";
+  text.value="";
 };
 
 // LOAD POSTS
 function loadPosts(){
 
-  const q = query(collection(db,"posts"), orderBy("created","desc"));
+  const q=query(collection(db,"posts"),orderBy("created","desc"));
 
   onSnapshot(q,(snapshot)=>{
 
-    posts.innerHTML = "";
+    posts.innerHTML="";
 
     snapshot.forEach((post)=>{
 
-      const d = post.data();
+      const d=post.data();
 
-      const time = new Date(d.created).toLocaleString("en-NZ",{
+      const time=new Date(d.created).toLocaleString("en-NZ",{
         day:"numeric",
         month:"short",
         hour:"numeric",
         minute:"2-digit"
       });
 
-      posts.innerHTML += `
-
+      posts.innerHTML+=`
       <div class="card">
 
         <div class="header">
-
           <div class="user">🐵 ${d.username}</div>
-
           <div class="time">${time}</div>
-
         </div>
 
         <div class="title">${d.title}</div>
 
         <div class="content">${d.text}</div>
 
-        ${(d.owner===auth.currentUser.uid || isAdmin) ? `
+        ${(d.owner===auth.currentUser.uid||isAdmin)?
+        `<button class="delete" onclick="window.del('${post.id}')">🗑 Delete</button>`
+        :""}
 
-        <button class="delete"
-        onclick="window.del('${post.id}')">
-
-        🗑 Delete
-
-        </button>
-
-        ` : ""}
-
-      </div>
-
-      `;
-
+      </div>`;
     });
 
   });
@@ -390,14 +373,50 @@ function loadPosts(){
 }
 
 // DELETE
-window.del = async(id)=>{
+window.del=async(id)=>{
 
   if(confirm("Delete this post?")){
-
     await deleteDoc(doc(db,"posts",id));
-
   }
 
+};
+
+// ❤️ COMPATIBILITY
+const comments=[
+  {min:95,text:"💍 Destined to be together"},
+  {min:85,text:"🥹 Cute couple"},
+  {min:70,text:"💚 Actually a solid match"},
+  {min:55,text:"😳 Could definitely work"},
+  {min:40,text:"🤔 Mixed signals"},
+  {min:25,text:"💀 Probably just friends"},
+  {min:10,text:"⚠️ Stay away from each other"},
+  {min:0,text:"🚨 Absolutely cursed duo"}
+];
+
+testLove.onclick=()=>{
+
+  const a=person1.value.trim();
+  const b=person2.value.trim();
+
+  if(!a||!b){
+    alert("Enter two usernames!");
+    return;
+  }
+
+  const percent=Math.floor(Math.random()*101);
+  const comment=comments.find(c=>percent>=c.min).text;
+
+  loveResult.innerHTML=`
+    <div style="font-size:64px;font-weight:800;color:#9af5a8;">
+      ${percent}%
+    </div>
+
+    <h2>${a} ❤️ ${b}</h2>
+
+    <p style="margin-top:8px;font-size:18px;">
+      ${comment}
+    </p>
+  `;
 };
 
 </script>
