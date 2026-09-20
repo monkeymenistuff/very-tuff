@@ -382,40 +382,79 @@ window.del=async(id)=>{
 };
 
 // ❤️ COMPATIBILITY
-const comments=[
-  {min:95,text:"💍 Destined to be together"},
-  {min:85,text:"🥹 Cute couple"},
-  {min:70,text:"💚 Actually a solid match"},
-  {min:55,text:"😳 Could definitely work"},
-  {min:40,text:"🤔 Mixed signals"},
-  {min:25,text:"💀 Probably just friends"},
+const personalities = [
+"Golden Retriever","Black Cat","Hopeless Romantic","Chaos Goblin","Gym Rat","Night Owl","Class Clown","Quiet Genius","Drama Queen","Green Flag",
+"Red Flag","Coffee Addict","Overthinker","Flirty Menace","Softie","Main Character","Professional Hater","Yapper","Mysterious Introvert","Sunshine Soul",
+"Bookworm","Gamer","Plant Parent","Cat Whisperer","Dog Lover","Fashion Icon","Anime Addict","Movie Buff","Music Nerd","Skater",
+"Artist","Poet","Chef","Baker","Tea Lover","Adrenaline Junkie","Beach Lover","Mountain Explorer","Hopeless Flirt","Shy Bean",
+"Protective Friend","Loyal Legend","Walking Meme","Sleep Deprived","Rich Energy","Broke Energy","Party Animal","Homebody","Serial Texter","Ghoster",
+"Emoji Spammer","Late Replier","Early Bird","Deep Thinker","Sarcastic Menace","Sweetheart","Villain Arc","Soft Spoken","Competitive","People Pleaser",
+"Chaotic Good","Lawful Good","Lawful Evil","Chaotic Evil","Lucky Charm","Unlucky","Secret Genius","Tiny Menace","Tall Energy","Short King/Queen",
+"Pink Princess","Dark Academia","Cottagecore","Streetwear King","Minimalist","Messy Room","Organised Freak","Clingy","Independent","Hopeless Dreamer",
+"Reality Checker","Therapist Friend","Mom Friend","Dad Friend","Conspiracy Theorist","TikTok Addict","Instagram Model","Discord Goblin","Study Machine","Procrastinator",
+"Space Nerd","Science Geek","History Buff","Pirate Energy","Wizard Vibes","Fairy Core","Vampire Energy","Angel Aura","Lucky Duck","Certified Menace"
+];
+
+const comments = [
+  {min:98,text:"💍 Soulmates. Wedding when?"},
+  {min:90,text:"🥹 Destined to be together"},
+  {min:80,text:"💚 Cute couple energy"},
+  {min:70,text:"🌿 Actually a really solid match"},
+  {min:60,text:"😳 There's definitely chemistry"},
+  {min:50,text:"🤝 Could work with good communication"},
+  {min:40,text:"🤔 Mixed signals..."},
+  {min:30,text:"😬 Better as friends"},
+  {min:20,text:"💀 This might end in disaster"},
   {min:10,text:"⚠️ Stay away from each other"},
   {min:0,text:"🚨 Absolutely cursed duo"}
 ];
 
-testLove.onclick=()=>{
+function randomPersonality(){
+  return personalities[Math.floor(Math.random()*personalities.length)];
+}
 
-  const a=person1.value.trim();
-  const b=person2.value.trim();
+document.getElementById("testLove").onclick = () => {
 
-  if(!a||!b){
+  const a = document.getElementById("person1").value.trim();
+  const b = document.getElementById("person2").value.trim();
+
+  if(!a || !b){
     alert("Enter two usernames!");
     return;
   }
 
-  const percent=Math.floor(Math.random()*101);
-  const comment=comments.find(c=>percent>=c.min).text;
+  const percent = Math.floor(Math.random()*101);
 
-  loveResult.innerHTML=`
-    <div style="font-size:64px;font-weight:800;color:#9af5a8;">
+  const p1 = randomPersonality();
+  const p2 = randomPersonality();
+
+  const verdict = comments.find(c => percent >= c.min).text;
+
+  document.getElementById("loveResult").innerHTML = `
+    <div style="font-size:68px;font-weight:900;color:#9af5a8;">
       ${percent}%
     </div>
 
-    <h2>${a} ❤️ ${b}</h2>
+    <h2 style="margin:8px 0;">${a} ❤️ ${b}</h2>
 
-    <p style="margin-top:8px;font-size:18px;">
-      ${comment}
-    </p>
+    <div style="
+      margin:18px 0;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.12);
+      border-radius:16px;
+      padding:16px;
+      text-align:left;
+    ">
+      <p><b>🐵 ${a}</b></p>
+      <p>✨ ${p1}</p>
+
+      <hr style="border:none;border-top:1px solid rgba(255,255,255,.08);margin:12px 0;">
+
+      <p><b>🐵 ${b}</b></p>
+      <p>✨ ${p2}</p>
+    </div>
+
+    <h3 style="color:#d8ffe0;">${verdict}</h3>
   `;
 };
 
