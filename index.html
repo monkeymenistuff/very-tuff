@@ -305,6 +305,7 @@ const auth = getAuth(app);
 let currentUsername = "";
 let isAdmin = false;
 let selectedUser = null;
+  let allMessages = [];
 let chatUnsubscribe = null;
   let currentChatId = null;
   
@@ -389,7 +390,8 @@ onAuthStateChanged(auth, async(user)=>{
     `🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
 
   loadPosts();
-  loadUsers();
+loadUsers();
+loadMessages();
 
 });
 
@@ -497,6 +499,47 @@ function loadPosts(){
 
 }
 
+  function loadMessages(){
+
+  const q = query(collection(db,"messages"), orderBy("created"));
+
+  onSnapshot(q, (snapshot)=>{
+
+    allMessages = snapshot.docs.map(doc => doc.data());
+
+    if(selectedUser){
+      renderChat();
+    }
+
+  });
+
+}
+
+function renderChat(){
+
+  chat.innerHTML = "";
+
+  allMessages.forEach((d)=>{
+
+    const show =
+      (d.fromUid === auth.currentUser.uid && d.toUid === selectedUser.uid) ||
+      (d.fromUid === selectedUser.uid && d.toUid === auth.currentUser.uid);
+
+    if(!show) return;
+
+    const div = document.createElement("div");
+    div.className = "msg " +
+      (d.fromUid === auth.currentUser.uid ? "me" : "them");
+    div.textContent = d.text;
+
+    chat.appendChild(div);
+
+  });
+
+  chat.scrollTop = chat.scrollHeight;
+
+}
+
 // DELETE POST
 window.del=async(id)=>{
 
@@ -536,40 +579,13 @@ window.openChat = function(uid, name){
 
   selectedUser = { uid, name };
 
-  const convoId = [auth.currentUser.uid, uid].sort().join("_");
-
   document.getElementById("chatHeader").innerHTML =
     `<p style="color:#9af5a8;margin-bottom:10px;">
       Chatting with <b>${name}</b>
     </p>`;
 
-  if(chatUnsubscribe) chatUnsubscribe();
+  renderChat();
 
-  const q = query(
-    collection(db,"messages"),
-    where("conversationId","==",convoId),
-    orderBy("created")
-  );
-
-  chatUnsubscribe = onSnapshot(q,(snapshot)=>{
-
-    chat.innerHTML = "";
-
-    snapshot.forEach((docSnap)=>{
-
-      const d = docSnap.data();
-
-      const div = document.createElement("div");
-      div.className = "msg " +
-        (d.fromUid === auth.currentUser.uid ? "me" : "them");
-
-      div.textContent = d.text;
-      chat.appendChild(div);
-
-    });
-
-    chat.scrollTop = chat.scrollHeight;
-  });
 };
   // SEND MESSAGE
 document.getElementById("send").onclick = async () => {
