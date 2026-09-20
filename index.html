@@ -61,30 +61,6 @@ h1{
   cursor:pointer;
 }
 
-.nav{
-  display:flex;
-  background:rgba(255,255,255,.08);
-  border-radius:999px;
-  padding:5px;
-  margin-bottom:18px;
-}
-
-.navBtn{
-  flex:1;
-  border:none;
-  background:transparent;
-  color:#d7f5dc;
-  padding:12px;
-  border-radius:999px;
-  font-weight:700;
-  cursor:pointer;
-}
-
-.navBtn.active{
-  background:#58b66a;
-  color:white;
-}
-
 input,textarea{
   width:100%;
   padding:13px;
@@ -160,38 +136,7 @@ button{
   margin-top:14px;
 }
 
-.users{
-  display:flex;
-  flex-direction:column;
-  gap:8px;
-  margin-bottom:12px;
-}
-
-.userBtn{
-  background:rgba(255,255,255,.08);
-  padding:12px;
-  border-radius:10px;
-  cursor:pointer;
-}
-
-.msg{
-  max-width:72%;
-  padding:10px 14px;
-  border-radius:16px;
-  margin:8px 0;
-}
-
-.me{
-  background:#58b66a;
-  margin-left:auto;
-}
-
-.them{
-  background:#355c41;
-}
-
-#app,
-#dmPage{
+#app{
   display:none;
 }
 </style>
@@ -222,48 +167,23 @@ button{
     <button id="logout" class="logoutBtn">Logout</button>
   </div>
 
-  <div class="nav">
-    <button id="postsTab" class="navBtn active">🌍 Public</button>
-    <button id="dmTab" class="navBtn">💬 DMs</button>
+  <div class="box">
+    <h2>Create Post</h2>
+
+    <input id="title" placeholder="Post title...">
+    <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
+
+    <button id="post">Post</button>
   </div>
 
-  <div id="postsPage">
-
-    <div class="box">
-      <h2>Create Post</h2>
-
-      <input id="title" placeholder="Post title...">
-      <textarea id="text" placeholder="What's happening in the jungle?"></textarea>
-
-      <button id="post">Post</button>
-    </div>
-
-    <div id="posts"></div>
-
-  </div>
-
-  <div id="dmPage">
-
-    <div class="box">
-      <h2>Direct Messages</h2>
-
-      <div id="userList" class="users"></div>
-
-      <div id="chatHeader"></div>
-      <div id="chat"></div>
-
-      <textarea id="msgInput" placeholder="Type a message..."></textarea>
-
-      <button id="send">Send</button>
-    </div>
-
-  </div>
+  <div id="posts"></div>
 
 </div>
 
 </div>
 
 <script type="module">
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
 
 import {
@@ -304,20 +224,11 @@ const auth = getAuth(app);
 
 let currentUsername = "";
 let isAdmin = false;
-let selectedUser = null;
-  let allMessages = [];
-let chatUnsubscribe = null;
-  let currentChatId = null;
-  
+
 const loginBox = document.getElementById("loginBox");
 const appBox = document.getElementById("app");
 const welcome = document.getElementById("welcome");
 const posts = document.getElementById("posts");
-const userList = document.getElementById("userList");
-const chat = document.getElementById("chat");
-
-const postsPage = document.getElementById("postsPage");
-const dmPage = document.getElementById("dmPage");
 
 // SIGN UP
 document.getElementById("signup").onclick = async () => {
@@ -352,11 +263,13 @@ document.getElementById("signup").onclick = async () => {
 document.getElementById("login").onclick = async () => {
 
   try{
+
     await signInWithEmailAndPassword(
       auth,
       document.getElementById("email").value.trim(),
       document.getElementById("password").value
     );
+
   }catch(err){
     alert(err.message);
   }
@@ -364,7 +277,7 @@ document.getElementById("login").onclick = async () => {
 };
 
 // LOGOUT
-document.getElementById("logout").onclick = ()=> signOut(auth);
+document.getElementById("logout").onclick = () => signOut(auth);
 
 // AUTH
 onAuthStateChanged(auth, async(user)=>{
@@ -381,88 +294,65 @@ onAuthStateChanged(auth, async(user)=>{
   isAdmin = user.email === ADMIN_EMAIL;
 
   const snap = await getDocs(
-    query(collection(db,"users"),where("uid","==",user.uid))
+    query(collection(db,"users"), where("uid","==",user.uid))
   );
 
   currentUsername = snap.docs[0].data().username;
 
   welcome.innerHTML =
-    `🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
+    `🐒 ${currentUsername}${isAdmin ? " 👑 Alpha Monk" : ""}`;
 
   loadPosts();
-loadUsers();
-loadMessages();
 
 });
-
-// TAB SWITCHING
-document.getElementById("postsTab").onclick=()=>{
-
-  postsPage.style.display="block";
-  dmPage.style.display="none";
-
-  document.getElementById("postsTab").classList.add("active");
-  document.getElementById("dmTab").classList.remove("active");
-
-};
-
-document.getElementById("dmTab").onclick=()=>{
-
-  postsPage.style.display="none";
-  dmPage.style.display="block";
-
-  document.getElementById("dmTab").classList.add("active");
-  document.getElementById("postsTab").classList.remove("active");
-
-};
 
 // CREATE POST
 document.getElementById("post").onclick = async()=>{
 
-  const title=document.getElementById("title").value.trim();
-  const text=document.getElementById("text").value.trim();
+  const title = document.getElementById("title").value.trim();
+  const text = document.getElementById("text").value.trim();
 
-  if(!title||!text){
+  if(!title || !text){
     alert("Write something!");
     return;
   }
 
   await addDoc(collection(db,"posts"),{
 
-    username:currentUsername,
-    owner:auth.currentUser.uid,
+    username: currentUsername,
+    owner: auth.currentUser.uid,
     title,
     text,
-    created:Date.now()
+    created: Date.now()
 
   });
 
-  document.getElementById("title").value="";
-  document.getElementById("text").value="";
+  document.getElementById("title").value = "";
+  document.getElementById("text").value = "";
 
 };
 
 // LOAD POSTS
 function loadPosts(){
 
-  const q=query(collection(db,"posts"),orderBy("created","desc"));
+  const q = query(collection(db,"posts"), orderBy("created","desc"));
 
   onSnapshot(q,(snapshot)=>{
 
-    posts.innerHTML="";
+    posts.innerHTML = "";
 
     snapshot.forEach((post)=>{
 
-      const d=post.data();
+      const d = post.data();
 
-      const time=new Date(d.created).toLocaleString("en-NZ",{
+      const time = new Date(d.created).toLocaleString("en-NZ",{
         day:"numeric",
         month:"short",
         hour:"numeric",
         minute:"2-digit"
       });
 
-      posts.innerHTML+=`
+      posts.innerHTML += `
 
       <div class="card">
 
@@ -478,7 +368,7 @@ function loadPosts(){
 
         <div class="content">${d.text}</div>
 
-        ${(d.owner===auth.currentUser.uid||isAdmin)?`
+        ${(d.owner===auth.currentUser.uid || isAdmin) ? `
 
         <button class="delete"
         onclick="window.del('${post.id}')">
@@ -487,7 +377,7 @@ function loadPosts(){
 
         </button>
 
-        `:""}
+        ` : ""}
 
       </div>
 
@@ -499,49 +389,8 @@ function loadPosts(){
 
 }
 
-  function loadMessages(){
-
-  const q = query(collection(db,"messages"), orderBy("created"));
-
-  onSnapshot(q, (snapshot)=>{
-
-    allMessages = snapshot.docs.map(doc => doc.data());
-
-    if(selectedUser){
-      renderChat();
-    }
-
-  });
-
-}
-
-function renderChat(){
-
-  chat.innerHTML = "";
-
-  allMessages.forEach((d)=>{
-
-    const show =
-      (d.fromUid === auth.currentUser.uid && d.toUid === selectedUser.uid) ||
-      (d.fromUid === selectedUser.uid && d.toUid === auth.currentUser.uid);
-
-    if(!show) return;
-
-    const div = document.createElement("div");
-    div.className = "msg " +
-      (d.fromUid === auth.currentUser.uid ? "me" : "them");
-    div.textContent = d.text;
-
-    chat.appendChild(div);
-
-  });
-
-  chat.scrollTop = chat.scrollHeight;
-
-}
-
-// DELETE POST
-window.del=async(id)=>{
+// DELETE
+window.del = async(id)=>{
 
   if(confirm("Delete this post?")){
 
@@ -551,65 +400,7 @@ window.del=async(id)=>{
 
 };
 
-// LOAD USERS
-function loadUsers(){
-
-  onSnapshot(collection(db,"users"), (snapshot)=>{
-
-    userList.innerHTML = "";
-
-    snapshot.forEach((docSnap)=>{
-
-      const d = docSnap.data();
-      if(d.uid === auth.currentUser.uid) return;
-
-      const btn = document.createElement("div");
-      btn.className = "userBtn";
-      btn.textContent = "🐵 " + d.username;
-
-      btn.onclick = () => window.openChat(d.uid, d.username);
-
-      userList.appendChild(btn);
-    });
-  });
-}
-
-// OPEN CHAT
-window.openChat = function(uid, name){
-
-  selectedUser = { uid, name };
-
-  document.getElementById("chatHeader").innerHTML =
-    `<p style="color:#9af5a8;margin-bottom:10px;">
-      Chatting with <b>${name}</b>
-    </p>`;
-
-  renderChat();
-
-};
-  // SEND MESSAGE
-document.getElementById("send").onclick = async () => {
-
-  if(!selectedUser) return;
-
-  const text = document.getElementById("msgInput").value.trim();
-  if(!text) return;
-
-  const convoId =
-    [auth.currentUser.uid, selectedUser.uid].sort().join("_");
-
-  await addDoc(collection(db,"messages"),{
-    conversationId: convoId,
-    fromUid: auth.currentUser.uid,
-    fromName: currentUsername,
-    toUid: selectedUser.uid,
-    toName: selectedUser.name,
-    text,
-    created: Date.now()
-  });
-
-  document.getElementById("msgInput").value = "";
-};
 </script>
+
 </body>
 </html>
