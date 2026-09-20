@@ -219,7 +219,7 @@ display:none;
 
 <div class="nav">
 <button id="postsTab" class="navBtn active">🌍 Public</button>
-<button id="randomTab" class="navBtn">🎲 Random</button>
+<button id="randomTab" class="navBtn">❤️ Match</button>
 <button id="quizTab" class="navBtn">🧠 Quiz</button>
 </div>
 
@@ -662,56 +662,62 @@ function personality(prefix){
   return Object.keys(score).reduce((a,b)=>score[a]>=score[b]?a:b);
 
 }
+testLove.onclick = () => {
 
-calculateLove.onclick=()=>{
+  const a = person1.value.trim();
+  const b = person2.value.trim();
 
-  const A=nameA.value||"Person A";
-  const B=nameB.value||"Person B";
+  if(!a || !b){
+    alert("Enter two usernames!");
+    return;
+  }
 
-  const pA=personality("a");
-  const pB=personality("b");
+  const name1 = a.toLowerCase();
+  const name2 = b.toLowerCase();
 
-  let score=45;
+  // Secret soulmate easter egg 😭
+  const soulmate =
+    (name1 === "gia han" && name2 === "elvin li") ||
+    (name1 === "elvin li" && name2 === "gia han");
 
-  if(pA===pB) score+=35;
+  let percent, comment;
 
-  if(
-    (pA==="romantic"&&pB==="chill")||
-    (pA==="chill"&&pB==="romantic")
-  ) score+=20;
+  if(soulmate){
+    percent = 100;
+    comment = "💍 Soulmates. The monkeys have spoken.";
+  }else{
+    percent = Math.floor(Math.random()*101);
 
-  if(
-    (pA==="chaotic"&&pB==="ambitious")||
-    (pA==="ambitious"&&pB==="chaotic")
-  ) score+=15;
+    const comments = [
+      "🥹 Destined to be together",
+      "💚 Cute couple",
+      "😳 There's chemistry",
+      "🤝 Better as friends",
+      "💀 Absolutely cursed duo",
+      "⚠️ Stay away from each other"
+    ];
 
-  score+=Math.floor(Math.random()*11)-5;
-  score=Math.max(0,Math.min(100,score));
+    comment = comments[Math.floor(Math.random()*comments.length)];
+  }
 
-  let verdict="🤝 Better as friends";
+  const p1 = personalities[Math.floor(Math.random()*personalities.length)];
+  const p2 = personalities[Math.floor(Math.random()*personalities.length)];
 
-  if(score>=95) verdict="💍 Soulmates";
-  else if(score>=80) verdict="🥹 Destined to be together";
-  else if(score>=65) verdict="💚 Great chemistry";
-  else if(score>=50) verdict="😳 Could definitely work";
-  else if(score>=25) verdict="🤔 Mixed signals";
-  else verdict="💀 Stay away from each other";
+  loveResult.innerHTML = `
+    <h1 style="font-size:68px;color:#9af5a8;">${percent}%</h1>
 
-  quizResult.innerHTML=`
-    <h1>${score}%</h1>
-    <h2>${A} ❤️ ${B}</h2>
+    <h2>${a} ❤️ ${b}</h2>
 
     <div class="personality">
-      <p><b>🐵 ${A}</b></p>
-      <p>${types[pA]}</p>
+      <p><b>🐵 ${a}</b></p>
+      <p>✨ ${p1}</p>
       <br>
-      <p><b>🐵 ${B}</b></p>
-      <p>${types[pB]}</p>
+      <p><b>🐵 ${b}</b></p>
+      <p>✨ ${p2}</p>
     </div>
 
-    <h3 style="margin-top:16px">${verdict}</h3>
+    <h3 style="margin-top:16px;">${comment}</h3>
   `;
-
 };
 
 </script>
