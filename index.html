@@ -3,189 +3,220 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MONKS</title>
+
+<title>HOMEWORK</title>
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,Arial,sans-serif}
-
-body{
-background:linear-gradient(180deg,#1f3d29 0%,#2f5d3a 45%,#8bcf9c 100%);
-color:#eefaf0;
-min-height:100vh;
-padding:24px;
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Inter,Arial,sans-serif;
 }
 
-.container{max-width:920px;margin:auto}
+body{
+    background:linear-gradient(
+        180deg,
+        #172b45 0%,
+        #254d73 45%,
+        #8bbbd8 100%
+    );
+    color:#eef7ff;
+    min-height:100vh;
+    padding:24px;
+}
+
+.container{
+    max-width:920px;
+    margin:auto;
+}
 
 h1{
-text-align:center;
-font-size:52px;
-color:#d8ffe0;
-letter-spacing:2px;
+    text-align:center;
+    font-size:52px;
+    color:#e5f5ff;
+    letter-spacing:2px;
 }
 
 .sub{
-text-align:center;
-color:#d7f5dc;
-margin:8px 0 28px;
+    text-align:center;
+    color:#d6ebf7;
+    margin:8px 0 28px;
 }
 
 .box{
-background:rgba(255,255,255,.08);
-backdrop-filter:blur(18px);
-border:1px solid rgba(255,255,255,.15);
-border-radius:22px;
-padding:20px;
-margin-bottom:18px;
+    background:rgba(255,255,255,.08);
+    backdrop-filter:blur(18px);
+    border:1px solid rgba(255,255,255,.15);
+    border-radius:22px;
+    padding:20px;
+    margin-bottom:18px;
 }
 
 .topbar{
-display:flex;
-justify-content:space-between;
-align-items:center;
-margin-bottom:18px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:18px;
 }
 
 .welcome{
-font-weight:700;
-font-size:18px;
+    font-weight:700;
+    font-size:18px;
 }
 
 .logoutBtn{
-width:auto;
-padding:10px 16px;
-border:none;
-border-radius:10px;
-background:rgba(255,255,255,.12);
-color:white;
-cursor:pointer;
+    width:auto;
+    padding:10px 16px;
+    border:none;
+    border-radius:10px;
+    background:rgba(255,255,255,.12);
+    color:white;
+    cursor:pointer;
 }
 
 .nav{
-display:flex;
-background:rgba(255,255,255,.08);
-border-radius:999px;
-padding:5px;
-margin-bottom:18px;
-gap:6px;
+    display:flex;
+    background:rgba(255,255,255,.08);
+    border-radius:999px;
+    padding:5px;
+    margin-bottom:18px;
 }
 
 .navBtn{
-flex:1;
-border:none;
-background:transparent;
-color:#d7f5dc;
-padding:12px;
-border-radius:999px;
-font-weight:700;
-cursor:pointer;
+    flex:1;
+    border:none;
+    background:transparent;
+    color:#d6ebf7;
+    padding:12px;
+    border-radius:999px;
+    font-weight:700;
+    cursor:pointer;
 }
 
 .navBtn.active{
-background:#58b66a;
-color:white;
+    background:#4c9bd1;
+    color:white;
 }
 
-input,textarea,select{
-width:100%;
-padding:13px;
-margin:8px 0;
-border-radius:12px;
-border:none;
-background:rgba(255,255,255,.10);
-color:white;
+input,
+textarea,
+select{
+    width:100%;
+    padding:13px;
+    margin:8px 0;
+    border-radius:12px;
+    border:none;
+    background:rgba(255,255,255,.10);
+    color:white;
+    outline:none;
 }
 
 select option{
-background:#295337;
-color:white;
+    background:#254d73;
+    color:white;
 }
 
 input::placeholder,
 textarea::placeholder{
-color:#cce8d1;
+    color:#c9deeb;
 }
 
 textarea{
-resize:none;
-height:130px;
+    resize:none;
+    height:150px;
 }
 
 button{
-width:100%;
-padding:12px;
-border:none;
-border-radius:12px;
-background:#58b66a;
-color:white;
-font-weight:700;
-cursor:pointer;
-margin-top:8px;
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#4c9bd1;
+    color:white;
+    font-weight:700;
+    cursor:pointer;
+    margin-top:8px;
+}
+
+button:hover{
+    opacity:.9;
 }
 
 .secondary{
-background:rgba(255,255,255,.12);
+    background:rgba(255,255,255,.12);
+}
+
+.filterBox{
+    display:flex;
+    gap:10px;
+    align-items:center;
+}
+
+.filterBox select{
+    margin:0;
 }
 
 .card{
-background:rgba(22,55,32,.82);
-border-radius:18px;
-padding:18px;
-margin-bottom:14px;
+    background:rgba(19,48,72,.85);
+    border-radius:18px;
+    padding:18px;
+    margin-bottom:14px;
 }
 
 .header{
-display:flex;
-justify-content:space-between;
-align-items:center;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
 }
 
 .user{
-color:#9af5a8;
-font-weight:700;
+    color:#91d1ff;
+    font-weight:700;
 }
 
 .time{
-color:#bddfc5;
-font-size:13px;
+    color:#b9d3e3;
+    font-size:13px;
+}
+
+.subject{
+    display:inline-block;
+    background:rgba(76,155,209,.25);
+    color:#9ed8ff;
+    padding:5px 10px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:700;
+    margin-top:10px;
 }
 
 .title{
-font-size:24px;
-font-weight:700;
-margin:10px 0;
+    font-size:24px;
+    font-weight:700;
+    margin:10px 0;
 }
 
 .content{
-white-space:pre-wrap;
-line-height:1.6;
+    white-space:pre-wrap;
+    line-height:1.6;
+    color:#e5f2fa;
 }
 
 .delete{
-background:#324d39;
-margin-top:14px;
+    background:#344b5a;
+    margin-top:14px;
 }
 
-.result{
-margin-top:18px;
-padding:18px;
-background:rgba(255,255,255,.08);
-border-radius:16px;
-text-align:center;
+.empty{
+    text-align:center;
+    padding:30px;
+    color:#c5dce9;
 }
 
-.personality{
-text-align:left;
-margin-top:12px;
-padding:12px;
-background:rgba(255,255,255,.06);
-border-radius:12px;
-}
-
-#app,
-#randomPage,
-#quizPage{
-display:none;
+#app{
+    display:none;
 }
 </style>
 </head>
@@ -194,532 +225,863 @@ display:none;
 
 <div class="container">
 
-<h1>🐒 MONKS</h1>
-<p class="sub">The jungle's community feed.</p>
+    <h1>📚 HOMEWORK</h1>
+    <p class="sub">Your homework community.</p>
 
-<div id="loginBox" class="box">
+    <!-- LOGIN -->
+    <div id="loginBox" class="box">
 
-<h2>Login / Sign Up</h2>
+        <h2>Login / Sign Up</h2>
 
-<input id="username" placeholder="Username (sign up only)">
-<input id="email" placeholder="Email">
-<input id="password" type="password" placeholder="Password">
+        <input
+            id="usernameInput"
+            placeholder="Username (sign up only)"
+        >
 
-<button id="signup">Create Account</button>
-<button id="login" class="secondary">Login</button>
+        <input
+            id="emailInput"
+            type="email"
+            placeholder="Email"
+        >
+
+        <input
+            id="passwordInput"
+            type="password"
+            placeholder="Password"
+        >
+
+        <button id="signupBtn">
+            Create Account
+        </button>
+
+        <button id="loginBtn" class="secondary">
+            Login
+        </button>
+
+    </div>
+
+
+    <!-- APP -->
+    <div id="app">
+
+        <div class="topbar">
+
+            <div id="welcome" class="welcome"></div>
+
+            <button id="logoutBtn" class="logoutBtn">
+                Logout
+            </button>
+
+        </div>
+
+
+        <!-- NAV -->
+        <div class="nav">
+
+            <button
+                id="postsTab"
+                class="navBtn active"
+            >
+                📚 Homework
+            </button>
+
+        </div>
+
+
+        <!-- HOMEWORK PAGE -->
+        <div id="postsPage">
+
+            <!-- CREATE POST -->
+            <div class="box">
+
+                <h2>📚 Post Homework</h2>
+
+                <select id="subjectInput">
+
+                    <option value="General">
+                        General
+                    </option>
+
+                    <option value="Mathematics">
+                        Mathematics
+                    </option>
+
+                    <option value="English">
+                        English
+                    </option>
+
+                    <option value="Science">
+                        Science
+                    </option>
+
+                    <option value="Social Studies">
+                        Social Studies
+                    </option>
+
+                    <option value="Languages">
+                        Languages
+                    </option>
+
+                    <option value="Technology">
+                        Technology
+                    </option>
+
+                    <option value="Art">
+                        Art
+                    </option>
+
+                    <option value="Other">
+                        Other
+                    </option>
+
+                </select>
+
+
+                <input
+                    id="titleInput"
+                    placeholder="Homework title..."
+                >
+
+
+                <textarea
+                    id="textInput"
+                    placeholder="Write the homework question, assignment, notes, or anything you need help with..."
+                ></textarea>
+
+
+                <button id="postBtn">
+                    📚 Post Homework
+                </button>
+
+            </div>
+
+
+            <!-- FILTER -->
+            <div class="box">
+
+                <h3>🔎 Filter Homework</h3>
+
+                <div class="filterBox">
+
+                    <select id="filterSubject">
+
+                        <option value="All">
+                            All Subjects
+                        </option>
+
+                        <option value="General">
+                            General
+                        </option>
+
+                        <option value="Mathematics">
+                            Mathematics
+                        </option>
+
+                        <option value="English">
+                            English
+                        </option>
+
+                        <option value="Science">
+                            Science
+                        </option>
+
+                        <option value="Social Studies">
+                            Social Studies
+                        </option>
+
+                        <option value="Languages">
+                            Languages
+                        </option>
+
+                        <option value="Technology">
+                            Technology
+                        </option>
+
+                        <option value="Art">
+                            Art
+                        </option>
+
+                        <option value="Other">
+                            Other
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- POSTS -->
+            <div id="posts">
+
+                <div class="empty">
+                    Loading homework...
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
 
 </div>
 
-<div id="app">
-
-<div class="topbar">
-<div id="welcome" class="welcome"></div>
-<button id="logout" class="logoutBtn">Logout</button>
-</div>
-
-<div class="nav">
-<button id="postsTab" class="navBtn active">🌍 Public</button>
-<button id="randomTab" class="navBtn">❤️ Match</button>
-<button id="quizTab" class="navBtn">🧠 Quiz</button>
-</div>
-
-<!-- PUBLIC POSTS -->
-
-<div id="postsPage">
-
-<div class="box">
-
-<h2>Create Post</h2>
-
-<input id="title" placeholder="Post title...">
-
-<textarea id="text" placeholder="What's happening in the jungle?"></textarea>
-
-<button id="post">Post</button>
-
-</div>
-
-<div id="posts"></div>
-
-</div>
-
-<!-- RANDOM COMPATIBILITY -->
-
-<div id="randomPage">
-
-<div class="box">
-
-<h2>🎲 Random Compatibility</h2>
-
-<input id="person1" placeholder="First username">
-<input id="person2" placeholder="Second username">
-
-<button id="testLove">Reveal Compatibility ❤️</button>
-
-<div id="loveResult" class="result"></div>
-
-</div>
-
-</div>
-
-<!-- QUIZ COMPATIBILITY -->
-
-<div id="quizPage">
-
-<div class="box">
-
-<h2>🧠 Personality Compatibility Quiz</h2>
-
-<h3>🐵 Person A</h3>
-
-<input id="nameA" placeholder="Username">
-
-<label>Ideal Friday?</label>
-<select id="a1">
-<option value="romantic">Date night</option>
-<option value="chaotic">Gaming marathon</option>
-<option value="chill">Sleeping</option>
-<option value="ambitious">Working on goals</option>
-</select>
-
-<label>Texting style?</label>
-<select id="a2">
-<option value="romantic">Replies instantly</option>
-<option value="chaotic">Only memes</option>
-<option value="chill">Replies whenever</option>
-<option value="ambitious">Straight to the point</option>
-</select>
-
-<label>Dream holiday?</label>
-<select id="a3">
-<option value="romantic">Paris</option>
-<option value="chaotic">Tokyo</option>
-<option value="chill">Maldives</option>
-<option value="ambitious">New York</option>
-</select>
-
----
-
-<h3>🐵 Person B</h3>
-
-<input id="nameB" placeholder="Username">
-
-<label>Ideal Friday?</label>
-<select id="b1">
-<option value="romantic">Date night</option>
-<option value="chaotic">Gaming marathon</option>
-<option value="chill">Sleeping</option>
-<option value="ambitious">Working on goals</option>
-</select>
-
-<label>Texting style?</label>
-<select id="b2">
-<option value="romantic">Replies instantly</option>
-<option value="chaotic">Only memes</option>
-<option value="chill">Replies whenever</option>
-<option value="ambitious">Straight to the point</option>
-</select>
-
-<label>Dream holiday?</label>
-<select id="b3">
-<option value="romantic">Paris</option>
-<option value="chaotic">Tokyo</option>
-<option value="chill">Maldives</option>
-<option value="ambitious">New York</option>
-</select>
-
-<button id="calculateLove">Calculate Compatibility ❤️</button>
-
-<div id="quizResult" class="result"></div>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
 
 <script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+/* =========================
+   FIREBASE
+========================= */
 
 import {
-  getFirestore,
-  collection,
-  addDoc,
-  query,
-  orderBy,
-  onSnapshot,
-  deleteDoc,
-  doc,
-  getDocs,
-  where
+    initializeApp
+} from "https://www.gstatic.com/firebasejs/12.19.0/firebase-app.js";
+
+import {
+    getFirestore,
+    collection,
+    addDoc,
+    query,
+    orderBy,
+    onSnapshot,
+    deleteDoc,
+    doc,
+    getDocs,
+    where
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-firestore.js";
 
 import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  onAuthStateChanged,
-  signOut
+    getAuth,
+    createUserWithEmailAndPassword,
+    signInWithEmailAndPassword,
+    onAuthStateChanged,
+    signOut
 } from "https://www.gstatic.com/firebasejs/12.19.0/firebase-auth.js";
 
-// ---------------- FIREBASE ----------------
 
 const firebaseConfig = {
-  apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
-  authDomain:"tuffmonkey-f75b3.firebaseapp.com",
-  projectId:"tuffmonkey-f75b3",
-  storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
-  messagingSenderId:"897150250440",
-  appId:"1:897150250440:web:8a668c17d28074fad264fd"
-};
 
-const ADMIN_EMAIL="monkeymen0706@gmail.com";
+    apiKey:"AIzaSyDTgzdADXgjYIIUBHSpVdcE6kBEnvdbCj0",
 
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-const auth=getAuth(app);
+    authDomain:"tuffmonkey-f75b3.firebaseapp.com",
 
-let currentUsername="";
-let isAdmin=false;
+    projectId:"tuffmonkey-f75b3",
 
-// ---------------- ELEMENTS ----------------
+    storageBucket:"tuffmonkey-f75b3.firebasestorage.app",
 
-const loginBox=document.getElementById("loginBox");
-const appBox=document.getElementById("app");
-const welcome=document.getElementById("welcome");
-const posts=document.getElementById("posts");
+    messagingSenderId:"897150250440",
 
-const postsPage=document.getElementById("postsPage");
-const randomPage=document.getElementById("randomPage");
-const quizPage=document.getElementById("quizPage");
-
-// ---------------- AUTH ----------------
-
-signup.onclick=async()=>{
-
-  const username=username.value.trim();
-  const email=email.value.trim();
-  const password=password.value;
-
-  if(!username||!email||!password){
-    alert("Fill every box!");
-    return;
-  }
-
-  try{
-
-    const user=await createUserWithEmailAndPassword(auth,email,password);
-
-    await addDoc(collection(db,"users"),{
-      uid:user.user.uid,
-      username
-    });
-
-    alert("Welcome to MONKS 🐒");
-
-  }catch(err){
-    alert(err.message);
-  }
+    appId:"1:897150250440:web:8a668c17d28074fad264fd"
 
 };
 
-login.onclick=async()=>{
 
-  try{
+const ADMIN_EMAIL = "monkeymen0706@gmail.com";
 
-    await signInWithEmailAndPassword(
-      auth,
-      email.value.trim(),
-      password.value
-    );
 
-  }catch(err){
-    alert(err.message);
-  }
+const firebaseApp = initializeApp(firebaseConfig);
+
+const db = getFirestore(firebaseApp);
+
+const auth = getAuth(firebaseApp);
+
+
+/* =========================
+   VARIABLES
+========================= */
+
+let currentUsername = "";
+
+let isAdmin = false;
+
+let unsubscribePosts = null;
+
+let allPosts = [];
+
+
+/* =========================
+   ELEMENTS
+========================= */
+
+const loginBox =
+    document.getElementById("loginBox");
+
+const appBox =
+    document.getElementById("app");
+
+const welcome =
+    document.getElementById("welcome");
+
+const usernameInput =
+    document.getElementById("usernameInput");
+
+const emailInput =
+    document.getElementById("emailInput");
+
+const passwordInput =
+    document.getElementById("passwordInput");
+
+const signupBtn =
+    document.getElementById("signupBtn");
+
+const loginBtn =
+    document.getElementById("loginBtn");
+
+const logoutBtn =
+    document.getElementById("logoutBtn");
+
+const titleInput =
+    document.getElementById("titleInput");
+
+const textInput =
+    document.getElementById("textInput");
+
+const subjectInput =
+    document.getElementById("subjectInput");
+
+const postBtn =
+    document.getElementById("postBtn");
+
+const posts =
+    document.getElementById("posts");
+
+const filterSubject =
+    document.getElementById("filterSubject");
+
+
+/* =========================
+   ESCAPE HTML
+========================= */
+
+function escapeHTML(value){
+
+    return String(value)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+
+}
+
+
+/* =========================
+   SIGN UP
+========================= */
+
+signupBtn.onclick = async () => {
+
+    const username =
+        usernameInput.value.trim();
+
+    const email =
+        emailInput.value.trim();
+
+    const password =
+        passwordInput.value;
+
+
+    if(!username || !email || !password){
+
+        alert("Fill every box!");
+
+        return;
+
+    }
+
+
+    if(password.length < 6){
+
+        alert("Password must be at least 6 characters.");
+
+        return;
+
+    }
+
+
+    try{
+
+        const userCredential =
+            await createUserWithEmailAndPassword(
+                auth,
+                email,
+                password
+            );
+
+
+        await addDoc(
+            collection(db,"users"),
+            {
+                uid:userCredential.user.uid,
+                username:username
+            }
+        );
+
+
+        alert("Welcome to HOMEWORK 📚");
+
+        usernameInput.value = "";
+
+    }
+    catch(error){
+
+        alert(error.message);
+
+    }
 
 };
 
-logout.onclick=()=>signOut(auth);
 
-onAuthStateChanged(auth,async(user)=>{
+/* =========================
+   LOGIN
+========================= */
 
-  if(!user){
-    loginBox.style.display="block";
-    appBox.style.display="none";
-    return;
-  }
+loginBtn.onclick = async () => {
 
-  loginBox.style.display="none";
-  appBox.style.display="block";
+    const email =
+        emailInput.value.trim();
 
-  isAdmin=user.email===ADMIN_EMAIL;
+    const password =
+        passwordInput.value;
 
-  const snap=await getDocs(
-    query(collection(db,"users"),where("uid","==",user.uid))
-  );
 
-  currentUsername=snap.docs[0].data().username;
+    if(!email || !password){
 
-  welcome.innerHTML=`🐒 ${currentUsername}${isAdmin?" 👑 Alpha Monk":""}`;
+        alert("Enter your email and password.");
 
-  loadPosts();
+        return;
+
+    }
+
+
+    try{
+
+        await signInWithEmailAndPassword(
+            auth,
+            email,
+            password
+        );
+
+    }
+    catch(error){
+
+        alert(error.message);
+
+    }
+
+};
+
+
+/* =========================
+   LOGOUT
+========================= */
+
+logoutBtn.onclick = async () => {
+
+    await signOut(auth);
+
+};
+
+
+/* =========================
+   AUTH STATE
+========================= */
+
+onAuthStateChanged(auth, async (user) => {
+
+    if(!user){
+
+        loginBox.style.display = "block";
+
+        appBox.style.display = "none";
+
+        currentUsername = "";
+
+        return;
+
+    }
+
+
+    loginBox.style.display = "none";
+
+    appBox.style.display = "block";
+
+
+    isAdmin =
+        user.email === ADMIN_EMAIL;
+
+
+    try{
+
+        const userQuery =
+            query(
+                collection(db,"users"),
+                where("uid","==",user.uid)
+            );
+
+
+        const snapshot =
+            await getDocs(userQuery);
+
+
+        if(!snapshot.empty){
+
+            currentUsername =
+                snapshot.docs[0].data().username;
+
+        }
+        else{
+
+            currentUsername =
+                user.email.split("@")[0];
+
+        }
+
+
+        welcome.innerHTML =
+            `📚 ${escapeHTML(currentUsername)}${isAdmin ? " 👑 Admin" : ""}`;
+
+
+        loadPosts();
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not load your account information."
+        );
+
+    }
 
 });
 
-// ---------------- TABS ----------------
 
-postsTab.onclick=()=>{
+/* =========================
+   CREATE HOMEWORK POST
+========================= */
 
-  postsPage.style.display="block";
-  randomPage.style.display="none";
-  quizPage.style.display="none";
+postBtn.onclick = async () => {
 
-  postsTab.classList.add("active");
-  randomTab.classList.remove("active");
-  quizTab.classList.remove("active");
+    const title =
+        titleInput.value.trim();
+
+    const text =
+        textInput.value.trim();
+
+    const subject =
+        subjectInput.value;
+
+
+    if(!title || !text){
+
+        alert("Write a title and homework!");
+
+        return;
+
+    }
+
+
+    if(!auth.currentUser){
+
+        alert("You must be logged in.");
+
+        return;
+
+    }
+
+
+    try{
+
+        await addDoc(
+            collection(db,"posts"),
+            {
+
+                username:currentUsername,
+
+                owner:auth.currentUser.uid,
+
+                subject:subject,
+
+                title:title,
+
+                text:text,
+
+                created:Date.now()
+
+            }
+        );
+
+
+        titleInput.value = "";
+
+        textInput.value = "";
+
+        subjectInput.value = "General";
+
+    }
+    catch(error){
+
+        console.error(error);
+
+        alert(
+            "Could not post homework: " +
+            error.message
+        );
+
+    }
 
 };
 
-randomTab.onclick=()=>{
 
-  postsPage.style.display="none";
-  randomPage.style.display="block";
-  quizPage.style.display="none";
-
-  randomTab.classList.add("active");
-  postsTab.classList.remove("active");
-  quizTab.classList.remove("active");
-
-};
-
-quizTab.onclick=()=>{
-
-  postsPage.style.display="none";
-  randomPage.style.display="none";
-  quizPage.style.display="block";
-
-  quizTab.classList.add("active");
-  postsTab.classList.remove("active");
-  randomTab.classList.remove("active");
-
-};
-
-// ---------------- POSTS ----------------
-
-post.onclick=async()=>{
-
-  const t=title.value.trim();
-  const txt=text.value.trim();
-
-  if(!t||!txt){
-    alert("Write something!");
-    return;
-  }
-
-  await addDoc(collection(db,"posts"),{
-    username:currentUsername,
-    owner:auth.currentUser.uid,
-    title:t,
-    text:txt,
-    created:Date.now()
-  });
-
-  title.value="";
-  text.value="";
-
-};
+/* =========================
+   LOAD POSTS
+========================= */
 
 function loadPosts(){
 
-  const q=query(collection(db,"posts"),orderBy("created","desc"));
+    if(unsubscribePosts){
 
-  onSnapshot(q,(snapshot)=>{
+        unsubscribePosts();
 
-    posts.innerHTML="";
+    }
 
-    snapshot.forEach((p)=>{
 
-      const d=p.data();
+    const postsQuery =
+        query(
+            collection(db,"posts"),
+            orderBy("created","desc")
+        );
 
-      const time=new Date(d.created).toLocaleString("en-NZ",{
-        day:"numeric",
-        month:"short",
-        hour:"numeric",
-        minute:"2-digit"
-      });
 
-      posts.innerHTML+=`
-      <div class="card">
+    unsubscribePosts =
+        onSnapshot(
+            postsQuery,
+            (snapshot) => {
 
-        <div class="header">
-          <div class="user">🐵 ${d.username}</div>
-          <div class="time">${time}</div>
-        </div>
+                allPosts = [];
 
-        <div class="title">${d.title}</div>
-        <div class="content">${d.text}</div>
 
-        ${(d.owner===auth.currentUser.uid||isAdmin)?
-        `<button class="delete" onclick="window.del('${p.id}')">🗑 Delete</button>`:""}
+                snapshot.forEach((postDoc) => {
 
-      </div>`;
+                    allPosts.push({
+
+                        id:postDoc.id,
+
+                        ...postDoc.data()
+
+                    });
+
+                });
+
+
+                displayPosts();
+
+            },
+
+            (error) => {
+
+                console.error(error);
+
+                posts.innerHTML = `
+                    <div class="empty">
+                        Could not load homework.
+                        <br><br>
+                        ${escapeHTML(error.message)}
+                    </div>
+                `;
+
+            }
+        );
+
+}
+
+
+/* =========================
+   DISPLAY POSTS
+========================= */
+
+function displayPosts(){
+
+    const selectedSubject =
+        filterSubject.value;
+
+
+    let filteredPosts =
+        allPosts;
+
+
+    if(selectedSubject !== "All"){
+
+        filteredPosts =
+            allPosts.filter(
+                post =>
+                    (post.subject || "General")
+                    === selectedSubject
+            );
+
+    }
+
+
+    if(filteredPosts.length === 0){
+
+        posts.innerHTML = `
+            <div class="empty">
+                📚 No homework posts yet.
+            </div>
+        `;
+
+        return;
+
+    }
+
+
+    posts.innerHTML = "";
+
+
+    filteredPosts.forEach((post) => {
+
+        const subject =
+            post.subject || "General";
+
+
+        const time =
+            post.created
+                ? new Date(post.created)
+                    .toLocaleString(
+                        "en-NZ",
+                        {
+                            day:"numeric",
+                            month:"short",
+                            year:"numeric",
+                            hour:"numeric",
+                            minute:"2-digit"
+                        }
+                    )
+                : "";
+
+
+        const canDelete =
+            auth.currentUser &&
+            (
+                post.owner === auth.currentUser.uid
+                ||
+                isAdmin
+            );
+
+
+        const card =
+            document.createElement("div");
+
+        card.className = "card";
+
+
+        card.innerHTML = `
+
+            <div class="header">
+
+                <div class="user">
+                    📚 ${escapeHTML(post.username || "Unknown")}
+                </div>
+
+                <div class="time">
+                    ${escapeHTML(time)}
+                </div>
+
+            </div>
+
+
+            <div class="subject">
+                ${escapeHTML(subject)}
+            </div>
+
+
+            <div class="title">
+                ${escapeHTML(post.title || "")}
+            </div>
+
+
+            <div class="content">
+                ${escapeHTML(post.text || "")}
+            </div>
+
+        `;
+
+
+        if(canDelete){
+
+            const deleteButton =
+                document.createElement("button");
+
+            deleteButton.className =
+                "delete";
+
+            deleteButton.textContent =
+                "🗑 Delete";
+
+
+            deleteButton.onclick =
+                async () => {
+
+                    if(
+                        !confirm(
+                            "Delete this homework post?"
+                        )
+                    ){
+
+                        return;
+
+                    }
+
+
+                    try{
+
+                        await deleteDoc(
+                            doc(
+                                db,
+                                "posts",
+                                post.id
+                            )
+                        );
+
+                    }
+                    catch(error){
+
+                        alert(
+                            "Could not delete post: " +
+                            error.message
+                        );
+
+                    }
+
+                };
+
+
+            card.appendChild(deleteButton);
+
+        }
+
+
+        posts.appendChild(card);
+
     });
 
-  });
-
 }
 
-window.del=async(id)=>{
 
-  if(confirm("Delete this post?")){
-    await deleteDoc(doc(db,"posts",id));
-  }
+/* =========================
+   SUBJECT FILTER
+========================= */
 
-};
+filterSubject.onchange = () => {
 
-// ---------------- RANDOM COMPATIBILITY ----------------
+    displayPosts();
 
-const personalities=[
-"Golden Retriever","Black Cat","Chaos Goblin","Gym Rat","Night Owl",
-"Softie","Main Character","Overthinker","Green Flag","Red Flag",
-"Hopeless Romantic","Yapper","Quiet Genius","Coffee Addict","Professional Hater",
-"Drama Queen","Clingy","Independent","Walking Meme","Artist",
-"Gamer","Bookworm","Beach Lover","Skater","Tea Lover",
-"Plant Parent","Dog Lover","Cat Whisperer","Streetwear King","Minimalist",
-"Chaotic Good","Lawful Good","Chaotic Evil","Lucky Duck","Space Nerd",
-"Science Geek","History Buff","TikTok Addict","Sleep Deprived","Therapist Friend",
-"Mom Friend","Dad Friend","Pirate Energy","Wizard Vibes","Vampire Energy",
-"Angel Aura","Fairy Core","Sarcastic Menace","Flirty Menace","Cottagecore"
-];
-
-const randomComments=[
-"💍 Soulmates",
-"🥹 Destined to be together",
-"💚 Cute couple",
-"😳 There's chemistry",
-"🤝 Better as friends",
-"💀 Absolutely cursed duo",
-"⚠️ Stay away from each other"
-];
-
-testLove.onclick=()=>{
-
-  const a=person1.value.trim();
-  const b=person2.value.trim();
-
-  if(!a||!b){
-    alert("Enter two usernames!");
-    return;
-  }
-
-  const p1=personalities[Math.floor(Math.random()*personalities.length)];
-  const p2=personalities[Math.floor(Math.random()*personalities.length)];
-
-  const percent=Math.floor(Math.random()*101);
-  const comment=randomComments[Math.floor(Math.random()*randomComments.length)];
-
-  loveResult.innerHTML=`
-    <h1>${percent}%</h1>
-    <h2>${a} ❤️ ${b}</h2>
-
-    <div class="personality">
-      <p><b>🐵 ${a}</b></p>
-      <p>✨ ${p1}</p>
-      <br>
-      <p><b>🐵 ${b}</b></p>
-      <p>✨ ${p2}</p>
-    </div>
-
-    <h3 style="margin-top:16px">${comment}</h3>
-  `;
-
-};
-
-// ---------------- QUIZ COMPATIBILITY ----------------
-
-const types={
-romantic:"💖 Hopeless Romantic",
-chaotic:"⚡ Chaos Gremlin",
-chill:"🌿 Chill Soul",
-ambitious:"🚀 Ambitious Legend"
-};
-
-function personality(prefix){
-
-  const score={
-    romantic:0,
-    chaotic:0,
-    chill:0,
-    ambitious:0
-  };
-
-  score[document.getElementById(prefix+"1").value]++;
-  score[document.getElementById(prefix+"2").value]++;
-  score[document.getElementById(prefix+"3").value]++;
-
-  return Object.keys(score).reduce((a,b)=>score[a]>=score[b]?a:b);
-
-}
-testLove.onclick = () => {
-
-  const a = person1.value.trim();
-  const b = person2.value.trim();
-
-  if(!a || !b){
-    alert("Enter two usernames!");
-    return;
-  }
-
-  const name1 = a.toLowerCase();
-  const name2 = b.toLowerCase();
-
-  // Secret soulmate easter egg 😭
-  const soulmate =
-    (name1 === "gia han" && name2 === "elvin li") ||
-    (name1 === "elvin li" && name2 === "gia han");
-
-  let percent, comment;
-
-  if(soulmate){
-    percent = 100;
-    comment = "💍 Soulmates. The monkeys have spoken.";
-  }else{
-    percent = Math.floor(Math.random()*101);
-
-    const comments = [
-      "🥹 Destined to be together",
-      "💚 Cute couple",
-      "😳 There's chemistry",
-      "🤝 Better as friends",
-      "💀 Absolutely cursed duo",
-      "⚠️ Stay away from each other"
-    ];
-
-    comment = comments[Math.floor(Math.random()*comments.length)];
-  }
-
-  const p1 = personalities[Math.floor(Math.random()*personalities.length)];
-  const p2 = personalities[Math.floor(Math.random()*personalities.length)];
-
-  loveResult.innerHTML = `
-    <h1 style="font-size:68px;color:#9af5a8;">${percent}%</h1>
-
-    <h2>${a} ❤️ ${b}</h2>
-
-    <div class="personality">
-      <p><b>🐵 ${a}</b></p>
-      <p>✨ ${p1}</p>
-      <br>
-      <p><b>🐵 ${b}</b></p>
-      <p>✨ ${p2}</p>
-    </div>
-
-    <h3 style="margin-top:16px;">${comment}</h3>
-  `;
 };
 
 </script>
+
 </body>
 </html>
